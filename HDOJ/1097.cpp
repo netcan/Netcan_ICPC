@@ -4,12 +4,12 @@
 //////////////////////////////////////////////////////
 ////Username: netcan
 ////Nickname: Netcan
-////Run ID: 
+////Run ID:
 ////Submit time: 2015-05-08 16:38:52
 ////Compiler: GUN C++
 //////////////////////////////////////////////////////
 ////Problem ID: 1097
-////Problem Title: 
+////Problem Title:
 ////Run result: Accept
 ////Run time:0MS
 ////Run memory:1596KB
@@ -57,6 +57,5 @@ int main()
 			c = c*a%10;
 		cout << c << endl;
 	}
-
 	return 0;
 }
