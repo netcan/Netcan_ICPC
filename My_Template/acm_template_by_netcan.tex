@@ -1,0 +1,316 @@
+\documentclass[a4paper]{ctexrep}
+\usepackage{listings, graphicx, color, soul, xcolor, txfonts, bm, geometry, fancyhdr, makeidx,CJK, fontspec}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[colorlinks,linkcolor=black]{hyperref}
+\setmonofont[Mapping={}]{Monaco} %英文引号之类的正常显示，相当于设置英文字体
+\setsansfont{Monaco} %设置英文字体 Monaco, Consolas,  Fantasque Sans Mono
+\setmainfont{Monaco} %设置英文字体
+% \setCJKmainfont{方正兰亭黑简体}  %中文字体设置
+% \setCJKsansfont{华康少女字体} %设置中文字体
+% \setCJKmonofont{华康少女字体} %设置中文字体
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+\lstset{ %
+backgroundcolor=\color{white},   % choose the background color
+basicstyle=\footnotesize\ttfamily,        % size of fonts used for the code
+columns=fullflexible,
+breaklines=true,                 % automatic line breaking only at whitespace
+captionpos=b,                    % sets the caption-position to bottom
+tabsize=4,
+commentstyle=\color{mygreen},    % comment style
+escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+keywordstyle=\color{blue},       % keyword style
+stringstyle=\color{mymauve}\ttfamily,     % string literal style
+% frame=shadowbox,
+rulesepcolor=\color{red!20!green!20!blue!20},
+% identifierstyle=\color{red},
+language=c++,
+}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines,
+\geometry{left=3cm,right=3cm,top=3cm,bottom=3cm}
+\makeindex
+\pagestyle{headings}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\textbf{By Netcan}}
+\fancyhead[R]{\leftmark}
+\fancyfoot[ER,OR]{\normalsize\thepage}
+
+\begin{document}
+
+\begin{titlepage}
+\newgeometry{top=6.4cm}
+\begin{center}
+\includegraphics{acm.jpg}\\[0.5cm]
+\HRule\\[0.4cm]
+{\huge \bfseries ACM-ICPC Template Libraries}\\[0.2cm] 
+\HRule\\[1.5cm]
+\textsc{\large 合肥工业大学宣城校区}\\[1cm]
+\includegraphics[width=3cm, height=3cm]{hfut_logo.jpg}\\[0.5cm]
+Author: \textbf{\emph{Netcan}}\\
+Blog: \textbf{\emph{\url{http://www.netcan.xyz}}}\\
+{\large \today}\\[2cm]
+\end{center}
+\end{titlepage}
+
+\tableofcontents
+
+\chapter{数学}
+\section{$0-20$的阶乘}
+\begin{lstlisting}
+const long long fac[21]={1,1,2,6,24,120,720,5040,40320,362880,
+						3628800,39916800,479001600,6227020800,
+						87178291200,1307674368000,20922789888000,
+						355687428096000,6402373705728000,121645100408832000,
+						2432902008176640000};
+\end{lstlisting}
+\section{错排公式}
+有n个元素的排列，若一个排列中所有的元素都不在自己原来的位置上，错排数记为$D(n)$，则
+$$D(n) = (n-1)[D(n-1)+D(n-2)]$$
+\section{最小公倍数$lcm(a,b)$ \&\& 最大公约数$gcd(a,b)$}
+\begin{lstlisting}
+inline int gcd(int a, int b) {
+	return b==0?a:gcd(b,a%b)
+}
+inline int lcm(int a, int b) {
+	return a/gcd(a,b)*b;
+}
+\end{lstlisting}
+\section{母函数}
+$G(x)=(1+x+x^2+\dots+x^N)(1+x^2+x^4+\dots+x^N)\dots(1+x^N)$展开后$x^N$的系数\underline{(注意溢出)}\\
+%\begin{lstlisting}
+%\end{lstlisting}
+\begin{lstlisting}
+int c1[MAX_N], c2[MAX_N]; // c1表示每一项的的系数，c2表示每个表达式的临时系数
+for(int i=0; i<=N; ++i) { // 每一项应该初始化为1,即1+x+x^2+...+x^N
+	c1[i] = 1;
+	c2[i] = 0;
+}
+for(int i=2; i<=N; ++i) { // 从第二个表达式开始
+	for(int j=0; j<=N; ++j) // 表示第一个表达式的第j项
+		for(int k=0;k+j<=N;k+=i) // k表示后一个表达式的第k项
+			c2[j+k] += c1[j]; // 这里应该是相当于C1*x^j * x^k=C1*x^(j+k)，即c2[k+j]+=C1[j]
+	for(int j=0; j<=N; ++j) {
+		c1[j] = c2[j]; // 确定x^j的系数
+		c2[j] = 0;
+	}
+}
+\end{lstlisting}
+
+\section{高精度}
+\subsection{加法\&\&乘法}
+适合大数的加法和乘法
+\begin{lstlisting}
+struct BigInt {
+	const static int nlen = 4; // 控制每个数组数字长度，默认为4，计算乘法的时候每个数组相乘也不会溢出int范围
+	const static int mod = 10000; // 值为10^nlen
+	short n[1000], len;  // 最多存4*1000位长度，可调，short占的内存小，但是速度慢
+	BigInt() {
+		memset(n, 0, sizeof(n));
+		len = 1;
+	}
+	BigInt(int num) {
+		len = 0;
+		while(num >0) {
+		n[len++] = num%mod;
+		num/=mod;
+		}
+	}
+	BigInt(const char *s) {
+		int l = strlen(s);
+		len = l % nlen  == 0 ? l/nlen : l/nlen+1;
+		int index = 0;
+		for(int i=l-1; i>=0; i -= nlen) {
+		int tmp = 0;
+		int j = i-nlen+1;
+		if(j<0) j = 0;
+		for(int k=j; k<=i; ++k)
+			tmp = tmp*10+s[k]-'0';
+		n[index++] = tmp;
+		}
+	}
+	BigInt operator+(const BigInt &b) const { // 加法
+		BigInt res;
+		res.len = max(len, b.len);
+		for(int i=0; i<res.len; ++i) {
+		res.n[i] += (i<len ? n[i]:0) + (i<b.len ? b.n[i]:0);
+		res.n[i+1] += res.n[i]/mod;
+		res.n[i] = res.n[i]%mod;
+		}
+		if(res.n[res.len] > 0) ++res.len;
+		return res;
+	}
+	BigInt operator*(const BigInt &b) const { // 乘法
+		BigInt res;
+		for(int i=0; i<len; ++i) { // 类似母函数，第一个数组
+		int up = 0; // 进位
+		for(int j=0; j<b.len; ++j) { // 第二个数组
+			int tmp = n[i]*b.n[j] + up + res.n[i+j]; // 控制nlen=4是防止tmp溢出
+			res.n[i+j] = tmp%mod;
+			up = tmp/mod;
+		}
+		if(up!=0)
+			res.n[i+b.len] = up;
+		}
+		res.len = len+b.len;
+		while(res.n[res.len-1] == 0 && res.len>1 ) --res.len;
+		return res;
+	}
+	void show() const {
+		printf("%d", n[len-1]); // 先输出最高位，后面可能需要前导0
+		for(int i=len-2; i>=0; --i)
+		printf("%04d", n[i]); // 前导0，%04d和nlen一致
+		printf("\n");
+	}
+};
+\end{lstlisting}
+
+
+
+\chapter{数据结构}
+\section{二叉搜索树}
+二叉搜索树是能够高效地进行如下操作的数据结构：
+\begin{itemize}
+		\item 插入一个数值
+		\item 查询是否包含某个数值
+		\item 删除某个数值
+\end{itemize}
+
+时间复杂度:\(O(log(n))\)
+\begin{lstlisting}
+struct node { // 树节点
+		int val;
+		node *lch, *rch;
+};
+
+node *insert(node *p, int x) { //插入数值x
+	if(p == NULL) { // 新建节点插入
+		node *q = new node;
+		q->val = x;
+		q->lch = q->rch = NULL;
+		return q;
+	}
+	else {
+		if(x < p->val)	p->lch = insert(p->lch, x); // 往左边搜索
+		else	p->rch = insert(p->rch, x); // 往右边搜索
+		return p;
+	}
+}
+
+bool find(node *p, int x) { // 查找数值x
+	if(p == NULL) return false; // 找不到
+	else if(p->val == x) return true; // 找到
+	else if(x < p->val) return find(p->lch, x); // 往左边搜索
+	else return find(p->rch, x); // 往右边搜索
+}
+
+node *remove(node *p, int x) { // 删除数值x
+	if(p == NULL) return NULL; // 找不到数值
+	else if(x < p->val) p->lch=remove(p->lch, x); // 往左边搜索
+	else if(x > p->val) p->rch=remove(p->rch, x); // 往右边搜索
+	else { // 找到
+		if(p->lch == NULL) { // 如果删除的节点没有左儿子,将右儿子提上来
+			node *q = p->rch;
+			delete p; // 删除
+			return q;
+		}
+		else if(p->lch->rch == NULL) { // 如果删除的节点左儿子没有右儿子,将左儿子提上来
+			node *q = p->lch;
+			q->rch = p->rch;
+			delete p; // 删除
+			return q;
+		}
+		else { // 否则，将左儿子的子孙中最大的节点提上来
+			node *q;
+			for(q=p->lch; q->rch->rch; q=q->rch); // 往左儿子搜索最大节点
+			node *r = q->rch; // r指向左儿子最大子孙节点,q指向最大儿子的父亲
+			q->rch = r->lch; // 因为r为提上去的节点，将r的左儿子（有的话,否则为NULL）挂到q的右边
+			r->lch = p->lch;
+			r->rch = p->rch;
+			delete p; // 删除
+			return r;
+		}
+	}
+	return p;
+}
+/**************Usage**************/
+	node *testbst=NULL; // 初始化
+	testbst = insert(testbst, x); // 插入数值x
+	if(find(testbst, x)) // 查找数值x
+		// balabala
+	else
+		// balabala
+	testbst = remove(testbst, x); // 删除数值x
+\end{lstlisting}
+
+\section{并查集}
+并查集是一种用来管理元素分组情况的数据结构,可以高效地进行如下两种操作：
+\begin{itemize}
+		\item 合并两个集合
+		\item 查找某元素属于哪个集合
+\end{itemize} 
+
+时间复杂度：\(O(\alpha(n))\)
+\begin{lstlisting}
+int par[MAX_N];
+// int height[MAX_N];
+void init(int n) { // 初始化
+	for (int i = 1; i <= n; ++i) {
+		par[i] = i;
+		// height[i] = 0;
+	}
+}
+int find(int x) { // 查找根节点（集合）+路径压缩
+	return x==par[x]?x:par[x]=find(par[x]);
+}
+void unite(int x, int y) { // 合并集合
+	x = find(x);
+	y = find(y);
+	if(x!=y) {
+	par[x] = y;
+	// if(height[x] < height[y])
+	// par[x] = y;
+	// else
+	// par[y] = x;
+	// if(height[x] == height[y]) ++height[x];
+	}
+}
+bool same(int x,int y) { // 判断两个元素是否同集合
+	return find(x) == find(y);
+}
+\end{lstlisting}
+
+
+\chapter{图}
+\section{邻接表}
+\subsection{样例1}
+\begin{lstlisting}
+#define MAX_V 100
+vector<int> G[MAX_V];
+
+/* 边上有属性
+ * struct edge { int to, cost; };
+ * vector<edge> G[MAX_V];
+ */
+
+int main()
+{
+	int V, E;
+	cin >> V >> E;
+	for(int i=0; i<E; ++i) {
+		int s, t;
+		cin >> s >> t;
+		G[s].push_back(t); // s->t
+		// G[s].push_back(edge(t, c));
+		// G[t].push_back(s); // 无向图
+	}
+	// balabala...
+}
+\end{lstlisting}
+
+
+\subsection{样例2}
+\end{document}
