@@ -1,74 +1,55 @@
-/*************************************************************************
-	> File Name: 打印沙漏.cpp
-	  > Author: Netcan
-	  > Blog: http://www.netcan.xyz
-	  > Mail: 1469709759@qq.com
-	  > Created Time: Sun 07 Jun 2015 03:57:25 PM CST
- ************************************************************************/
-
 #include <iostream>
-#include <vector>
-#include <string>
-#include <queue>
-#include <algorithm>
-#include <cmath>
-#include <ctime>
-#include <cstdio>
-#include <sstream>
-#include <deque>
-#include <functional>
-#include <iterator>
-#include <list>
-#include <map>
-#include <memory>
-#include <stack>
-#include <set>
-#include <numeric>
-#include <utility>
 #include <cstring>
 using namespace std;
 
-int main()
-{
-#ifdef Oj
-	 freopen("打印沙漏.in", "r", stdin);
-	 freopen("打印沙漏.out", "w", stdout);
-#endif
-	int N;
-	char c;
-	while(cin >> N >> c) {
-		int k = (-4+sqrt(16-8*(1-N)))/4;
-		int Maxc = 2*k+1;
-		int counts = 2*k*(k+2)+1;
-		// printf("k=%d counts=%d maxc=%d\n", k, counts, Maxc);
-		int space = 0;
-		for(int dc=Maxc;dc>=1; dc-=2) {
-			// for(int i=0; i<space; ++i)
-				// printf(" ");
-			for(int i=0; i<dc; ++i)
-				printf("%c", c);
-			// for(int i=0; i<space; ++i)
-				// printf(" ");
-			puts("");
-			++space;
-		}
-		// printf("space=%d\n", space);
-		space-=2;
-
-		for(int dc=3; dc<=Maxc; dc+=2) {
-			// for(int i=0; i<space; ++i)
-				// printf(" ");
-			for(int i=0; i<dc; ++i)
-				printf("%c", c);
-			// for(int i=0; i<space; ++i)
-				// printf(" ");
-			puts("");
-			--space;
-		}
-		cout << N - counts << endl;
+void to36(long long n, char * id) {
+	int i=0;
+	int base = 36;
+	while(n > 0) {
+		id[i++] = n%base;
+		n/=base;
 	}
+}
 
+int main() {
+//	freopen("test.in", "r", stdin);
+	long long n;
+	char id[30];
+	while(cin >> n) {
+		memset(id, -1, sizeof(id));
+//		cout << n << endl;
+		to36(n, id);
+//		for(int i=0;i<25; ++i) 
+//			printf("%d ", id[i]);
+//		cout << endl;
+		
+		
+		int len = 0;
+		for(int i=24; i>=0; --i)
+			if(id[i] >= 0) {
+				len = i;
+				break;
+			}
+		for(int i=0; i<=len; ++i)
+			if(id[i] >=0 && id[i] <=9) id[i] += '0';
+			else id[i] = id[i] - 10 + 'A';
 
-
+		int k = 1;
+		for(int i=len; i>=0; --i, ++k) {
+			cout << id[i];
+			if(k%5==0 && k!=25)
+				cout << "-";
+		}
+		for(int i=len+1; i<25; ++i, ++k) {
+			if(i&1)
+				cout << 'G';
+			else
+				cout << 'B';
+			if(k%5==0 && k!=25)
+				cout << "-";		
+		}
+		cout << endl;
+	
+	}
 	return 0;
 }
