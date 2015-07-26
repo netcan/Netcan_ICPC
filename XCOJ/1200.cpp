@@ -10,7 +10,7 @@
 double min(double a, double b) {
 	return a>b?b:a;
 }
-
+ 
 int main()
 {
 
