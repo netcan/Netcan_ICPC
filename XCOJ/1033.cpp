@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 int main(void)
-{
+{ 
 	int x,y,num=0;
 	char z[5];
 	char opt;
