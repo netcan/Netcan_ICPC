@@ -4,12 +4,12 @@
 //////////////////////////////////////////////////////
 ////Username: netcan
 ////Nickname: Netcan
-////Run ID: 
+////Run ID:
 ////Submit time: 2015-05-11 13:12:41
 ////Compiler: GUN C++
 //////////////////////////////////////////////////////
 ////Problem ID: 1005
-////Problem Title: 
+////Problem Title:
 ////Run result: Accept
 ////Run time:0MS
 ////Run memory:1592KB
@@ -70,8 +70,6 @@ int main()
 			cout << f[T] << endl;
 		else
 			cout << f[N%T] << endl;
-
-
 	}
 
 	return 0;
