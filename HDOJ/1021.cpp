@@ -4,12 +4,12 @@
 //////////////////////////////////////////////////////
 ////Username: netcan
 ////Nickname: Netcan
-////Run ID: 
+////Run ID:
 ////Submit time: 2015-05-11 11:37:41
 ////Compiler: GUN C++
 //////////////////////////////////////////////////////
 ////Problem ID: 1021
-////Problem Title: 
+////Problem Title:
 ////Run result: Accept
 ////Run time:31MS
 ////Run memory:9416KB
