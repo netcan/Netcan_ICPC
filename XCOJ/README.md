@@ -1,1 +1,1 @@
-http://xcacm.hfut.edu.cn/
+[XCOJ](http://xcacm.hfut.edu.cn/ "XCOJ")
