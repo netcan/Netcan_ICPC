@@ -93,3 +93,4 @@ echo '<p>题目地址：<a href="http://acm.hdu.edu.cn/showproblem.php?pid='$1'"
 </p>
 <pre class="lang:c++ decode:true">
 </pre>' | xsel -b -i
+# sudo apt-get install xsel
