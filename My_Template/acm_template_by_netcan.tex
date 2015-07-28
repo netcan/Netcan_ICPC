@@ -177,8 +177,9 @@ struct BigInt {
 	\item 可选步数为任意步，$SG(x)=x$;
 \end{enumerate}
 
-
 步数集合S需排序（升序）, sg数组记得初始化，对于确定的步数，一系列sg(x)值也就确定了。
+
+最终判断各个sg(x)的异或和，即可判断胜负。异或和为0先手必败，反之必胜。
 
 \subsection{打表}
 \begin{lstlisting}
