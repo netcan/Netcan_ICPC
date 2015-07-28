@@ -170,6 +170,57 @@ struct BigInt {
 
 
 
+\chapter{组合博弈}
+\section{SG函数 \&\& NIM游戏}
+\begin{enumerate}
+	\item 可选步数为$[1, m]$的连续整数，直接取模即可，$SG(x)=x\%(m+1)$;
+	\item 可选步数为任意步，$SG(x)=x$;
+\end{enumerate}
+
+
+步数集合S需排序（升序）, sg数组记得初始化，对于确定的步数，一系列sg(x)值也就确定了。
+
+\subsection{打表}
+\begin{lstlisting}
+int S[STEP_N], steps, sg[MAX_N];  // S集合存放走法，steps存放走法数，sg存放sg(x)的值
+bool vis[MAX_N]; // 标记
+void get_sg(int n) {
+	memset(sg, 0, sizeof(sg)); // 初始化sg
+	for(int i=1; i<=n; ++i) { // 从sg[1]开始计算
+		memset(vis, 0, sizeof(vis)); // 每次计算完一个sg值需要归零
+		for(int j=0; S[j] <= i && j <steps ; ++j)
+			vis[sg[i-S[j]]] = true; // 标记各个后继节点的sg值
+		for(int j=0; j<=n; ++j)
+			if(!vis[j]) { // 找出sg补集的最小值
+				sg[i] = j;
+				break;
+			}
+	}
+}
+\end{lstlisting}
+\subsection{递归}
+\begin{lstlisting}
+#pragma comment(linker, "/STACK:1024000000,1024000000") // 防止爆栈
+int S[STEP_N], sg[MAX_N], k; // 题目中的步数集合S, 以及sg(t)函数值sg(t), 步数集合大小k
+
+int SG(int p) { // 求sg(t)值函数SG(t)
+	bool vis[101] = {false}; // 标记各个sg(t)的值，为了方便求补集最小值(sg(t))，数组不宜开过大，爆栈就扩栈
+	for(int i=0; i<k; ++i) {
+		int t = p - S[i];
+		if(t < 0) // 小于0则退出循环，求出该层的sg(t)值
+			break;
+		if(sg[t] == -1) // 记得memset(sg, -1, sizeof(sg));
+			sg[t] = SG(t); // 递归求sg(t)
+		vis[sg[t]] = true; // 标记该层的sg(t)值
+	}
+	for(int i=0;; ++i) // 求出该层的sg(t)值，即补集的最小值
+		if(!vis[i])
+			return i;
+}
+\end{lstlisting}
+
+
+
 \chapter{数据结构}
 \section{二叉搜索树}
 二叉搜索树是能够高效地进行如下操作的数据结构：
