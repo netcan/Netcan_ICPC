@@ -1,5 +1,5 @@
 \documentclass[a4paper]{ctexrep}
-\usepackage{listings, graphicx, color, soul, xcolor, txfonts, bm, geometry, fancyhdr, makeidx,CJK, fontspec}
+\usepackage{listings, graphicx, color, soul, xcolor, bm, geometry, fancyhdr, makeidx,CJK, fontspec, amsmath, savesym}
 \usepackage[colorinlistoftodos]{todonotes}
 \usepackage[colorlinks,linkcolor=black]{hyperref}
 \setmonofont[Mapping={}]{Monaco} %英文引号之类的正常显示，相当于设置英文字体
@@ -8,6 +8,11 @@
 % \setCJKmainfont{方正兰亭黑简体}  %中文字体设置
 % \setCJKsansfont{华康少女字体} %设置中文字体
 % \setCJKmonofont{华康少女字体} %设置中文字体
+
+% \savesymbol{iint}
+% \usepackage{txfonts} % txfonts包和amsmath包中的\iint符号冲突，需要先用savesym包保存符号后还原
+% \restoresymbol{TXF}{iint}
+
 
 \definecolor{mygreen}{rgb}{0,0.6,0}
 \definecolor{mygray}{rgb}{0.5,0.5,0.5}
@@ -99,6 +104,15 @@ for(int i=2; i<=N; ++i) { // 从第二个表达式开始
 	}
 }
 \end{lstlisting}
+\section{动态规划}
+\subsection{最长公共子序列}
+$$
+dp[i+1][j+1]=\begin{cases}
+	dp[i][j]+1 & s[i]=s[j] \\
+	max(dp[i+1][j], dp[i][j+1]) & s[i] \neq s[j]
+\end{cases}
+$$
+
 
 \section{高精度}
 \subsection{加法\&\&乘法}
@@ -168,6 +182,10 @@ struct BigInt {
 };
 \end{lstlisting}
 
+
+
+\chapter{计算几何}
+\section{点}
 
 
 \chapter{组合博弈}
