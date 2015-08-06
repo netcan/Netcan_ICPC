@@ -80,7 +80,7 @@ void solve() {
 
 		for(int i=0; i<s1.length(); ++i)
 			for(int j=0; j<s2.length(); ++j)
-				dp[i+1][j+1] = max(max(dp[i][j+1] + table('-', s1[i]), dp[i+1][j]+table(s2[j], '-')), dp[i][j] + table(s1[i], s2[j]));
+				dp[i+1][j+1] = max(max(dp[i][j+1] + table(s1[i], '-'), dp[i+1][j]+table('-', s2[j])), dp[i][j] + table(s1[i], s2[j]));
 
 		// for(int i=0; i<=s1.length(); ++i) {
 			// for(int j=0; j<=s2.length(); ++j)
