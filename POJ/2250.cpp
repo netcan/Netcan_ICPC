@@ -60,11 +60,11 @@ void solve() {
 					op[i][j] = leftup;
 				}
 				else if(dp[i][j+1] >= dp[i+1][j]) {
-					dp[i+1][j+1] = dp[i][j+1];
+					dp[i+1][j+1] = dp[i][j+1]; // 指向大的, 所以箭头朝上
 					op[i][j] = up;
 				}
 				else  {
-					dp[i+1][j+1] = dp[i+1][j];
+					dp[i+1][j+1] = dp[i+1][j]; // 箭头朝左，左边大
 					op[i][j] = left;
 				}
 			}
@@ -81,7 +81,7 @@ void solve() {
 
 		while(i>=0 && j>=0) {
 			if(op[i][j] == leftup) {
-				ans[count++] = i;
+				ans[count++] = i; // 保存到栈中
 				--i;
 				--j;
 			}
