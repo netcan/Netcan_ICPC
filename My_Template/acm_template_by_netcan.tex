@@ -108,8 +108,15 @@ for(int i=2; i<=N; ++i) { // 从第二个表达式开始
 \subsection{最长公共子序列}
 $$
 dp[i+1][j+1]=\begin{cases}
-	dp[i][j]+1 & s[i]=s[j] \\
-	max(dp[i+1][j], dp[i][j+1]) & s[i] \neq s[j]
+	dp[i][j]+1 & s1[i]=s2[j] \cr
+	max(dp[i+1][j], dp[i][j+1]) & s1[i] \neq s2[j]
+\end{cases}
+$$
+$$
+op[i+1][j+1]=\begin{cases}
+	\nwarrow & s1[i]=s2[j] \cr
+	\uparrow & dp[i][j+1] \geq dp[i+1][j] \cr
+	\leftarrow & dp[i][j+1] < dp[i+1][j] \cr
 \end{cases}
 $$
 
