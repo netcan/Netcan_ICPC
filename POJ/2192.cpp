@@ -30,7 +30,7 @@ using namespace std;
 
 bool dp[202][202];
 /*
- * 动态规划，dp[i][j]表示a的前i个字符和b的前i个字符能否组成c的前i+j个字符。
+ * 动态规划，dp[i][j]表示a的前i个字符和b的前j个字符能否组成c的前i+j个字符。
  */
 
 void solve() {
