@@ -28,7 +28,7 @@ commentstyle=\color{mygreen},    % comment style
 escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
 keywordstyle=\color{blue},       % keyword style
 stringstyle=\color{mymauve}\ttfamily,     % string literal style
-% frame=shadowbox,
+frame=single,
 rulesepcolor=\color{red!20!green!20!blue!20},
 % identifierstyle=\color{red},
 language=c++,
@@ -119,6 +119,46 @@ op[i+1][j+1]=\begin{cases}
 	\leftarrow & dp[i][j+1] < dp[i+1][j] \cr
 \end{cases}
 $$
+\subsection{最长上升子序列}
+$$dp[i]=max\{1, dp[j]+1 | j<i \&\& a_j<a_i\}$$
+$O(N^2)$算法
+
+\begin{lstlisting}
+int a[MAX_N], dp[MAX_N]; // a为序列， dp[i]为以a[i]为结尾的最长上升子序列长度
+int Maxlis = 0; // 最长上升子序列长度
+int n; // a的有效长度
+for(int i=0; i<n; ++i) {
+	dp[i] = 1; // 记得初始化为1
+	for(int j=0; j<i; ++j)
+		if(a[i] > a[j])
+			dp[i] = max(dp[i], dp[j] + 1); 
+	Maxlis = max(Maxlis, dp[i]); // 记得更新Maxlis
+}
+\end{lstlisting}
+$O(n log(n))$算法
+
+\begin{lstlisting}
+#define INF 0x3f3f3f3f
+int a[MAX_N], dp[MAX_N]; // a为序列, dp[i]存放长度为i+1的上升序列中末尾元素的最小值
+int n; // 序列长度
+memset(dp, 0x3f, sizeof(dp)); // 初始化dp[i]值都为INF
+for(int i=0; i<n; ++i)
+	*lower_bound(dp, dp+n, a[i]) = a[i]; 
+// cout << lower_bound(dp, dp+n, INF) - dp << endl; // 最长上升序列的长度
+\end{lstlisting}
+
+$lower\_bound(dp, dp+n, k)$这个函数从已经排序好的序列$dp$中，二分搜索找出满足$dp_i \ge k$的$dp_i$的最小指针。
+
+$upper\_bound(dp, dp+n, k)$这个函数则从已经排序好的序列$dp$中，二分搜索找出满足$dp_i > k$的$dp_i$的最小指针。
+
+例如求有序数组$a$中的$k$的个数，可以利用下面的代码求出：
+\begin{lstlisting}
+upper_bound(a, a+n, k) - lower_bound(a, a+n, k)
+\end{lstlisting}
+
+
+
+
 
 \section{高精度}
 \subsection{加法\&\&乘法}
