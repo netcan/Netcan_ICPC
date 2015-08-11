@@ -51,7 +51,7 @@ language=c++,
 \begin{center}
 \includegraphics{acm_icpc_logo.png}\\[0.5cm]
 \HRule\\[0.4cm]
-{\huge \bfseries ACM-ICPC Template Libraries}\\[0.2cm] 
+{\huge \bfseries ACM-ICPC Template Libraries}\\[0.2cm]
 \HRule\\[1.5cm]
 \textsc{\large 合肥工业大学宣城校区}\\[1cm]
 \includegraphics[width=3cm, height=3cm]{hfut_logo.jpg}\\[0.5cm]
@@ -131,7 +131,7 @@ for(int i=0; i<n; ++i) {
 	dp[i] = 1; // 记得初始化为1
 	for(int j=0; j<i; ++j)
 		if(a[i] > a[j])
-			dp[i] = max(dp[i], dp[j] + 1); 
+			dp[i] = max(dp[i], dp[j] + 1);
 	Maxlis = max(Maxlis, dp[i]); // 记得更新Maxlis
 }
 \end{lstlisting}
@@ -143,7 +143,7 @@ int a[MAX_N], dp[MAX_N]; // a为序列, dp[i]存放长度为i+1的上升序列�
 int n; // 序列长度
 memset(dp, 0x3f, sizeof(dp)); // 初始化dp[i]值都为INF
 for(int i=0; i<n; ++i)
-	*lower_bound(dp, dp+n, a[i]) = a[i]; 
+	*lower_bound(dp, dp+n, a[i]) = a[i];
 // cout << lower_bound(dp, dp+n, INF) - dp << endl; // 最长上升序列的长度
 \end{lstlisting}
 
@@ -367,7 +367,7 @@ node *remove(node *p, int x) { // 删除数值x
 \begin{itemize}
 		\item 合并两个集合
 		\item 查找某元素属于哪个集合
-\end{itemize} 
+\end{itemize}
 
 时间复杂度：\(O(\alpha(n))\)
 \begin{lstlisting}
@@ -429,4 +429,96 @@ int main()
 
 
 \subsection{样例2}
+\section{单源最短路}
+\subsection{Bellman-Ford算法$O(V*E)$}
+\begin{lstlisting}
+struct Edge{ // 边
+	int from, to, cost; // 顶点from指向to权值为cost
+} edge[MAX_E];
+int d[MAX_V];
+int V, E;  // 节点数量V, 边的数量E
+
+bool bellman_ford(int s) { // 求解顶点s出发到所有节点的最短距离
+	memset(d, 0x3f, sizeof(d)); // 初始化到INF
+	d[s] = 0;
+	for(int i=1; i<=V-1; ++i) // 图的顶点编号从1开始计算
+		for(int j=1; j<=E; ++j) {
+			Edge e=edge[j];
+			if(d[e.to] > d[e.from] + e.cost) // 松弛计算
+				d[e.to] = d[e.from] + e.cost;
+		}
+
+	int flag = true; // 判断有没有负圈
+	for(int j=1; j<=E; ++j)
+		if(d[edge[j].to] > d[edge[j].from] + edge[j].cost) {
+			flag = false;
+			break;
+		}
+	return flag;
+}
+\end{lstlisting}
+
+\subsection{Dijkstra算法}
+$O(V^2)$
+\begin{lstlisting}
+int cost[MAXV][MAXV]; // cost[u][v]表示e={u,v}的权值（不存在则INF）
+int d[MAXV]; // 顶点s出发的最短距离
+bool used[MAXV]; // 标记已经使用过的顶点
+int V, E; // 顶点数V，边数E
+
+void dijkstra(int s) { // 源点s
+	memset(d, 0x3f, sizeof(d)); // 初始化至INF
+	memset(used, 0, sizeof(used)); // 初始化至INF
+	d[s] = 0;
+
+	while(true) {
+		int v = -1;
+		for(int u=1; u<=V; ++u) // 从未使用过的节点中选择一个距离最小的顶点，编号从1开始
+			if(!used[u] && (v==-1 || d[u] < d[v])) v = u;
+		if(v == -1) break; // 已经用完所有顶点了
+		used[v] = true; // 标记顶点
+		for(int u=1; u<=V; ++u) // 顶点编号从1开始计算
+			d[u] = min(d[u], d[v]+cost[v][u]);
+	}
+}
+\end{lstlisting}
+
+\clearpage
+$O(E logV)$
+\begin{lstlisting}
+struct edge { // 顶点属性
+	int to, val;
+	edge(int t, int v): to(t), val(v){}
+	bool operator<(const edge &b) const {
+		return val > b.val;
+	}
+
+};
+vector<edge> G[MAX_V]; // 邻接链表图
+int d[MAX_V];
+int V, E; // 顶点数V， 边数E
+
+void dijkstra(int s) {
+	priority_queue<edge> que;
+	memset(d, 0x3f, sizeof(d));
+	d[s] = 0;
+	que.push(edge(s, 0)); // 源点入队
+
+	while(!que.empty()) {
+		edge p = que.top(); que.pop();
+		int v = p.to;
+		if(d[v] < p.val) continue; // 当前最小值不是最短距离的话，丢弃
+		for(int i=0; i<G[v].size(); ++i) {
+			edge e = G[v][i];
+			if(d[e.to] > d[v] + e.val) {
+				d[e.to] = d[v] + e.val;
+				que.push(edge(e.to, d[e.to]));
+			}
+		}
+	}
+}
+\end{lstlisting}
+
+
+
 \end{document}
