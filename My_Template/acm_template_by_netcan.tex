@@ -483,7 +483,7 @@ void dijkstra(int s) { // 源点s
 }
 \end{lstlisting}
 
-\clearpage
+% \clearpage
 $O(E logV)$
 \begin{lstlisting}
 struct edge { // 顶点属性
@@ -519,6 +519,28 @@ void dijkstra(int s) {
 }
 \end{lstlisting}
 
+
+
+\section{任意两点间的最短路}
+Floyd $O(V^2)$
+$$
+d[i][j] = min(d[i][j], d[i][k] + d[k][j])
+$$
+
+和Bellman-Ford算法一样可以处理负圈，只需检查d[i][i]是否负数的顶点即可。
+
+\begin{lstlisting}
+int V, E; // 顶点数V, 边数E
+int d[102][102]; // d[u][v]表示边e={u, v}的权值（不存在则设为INF, d[u][u]=0）
+
+void floyd() {
+	for(int k=0; k<V; ++k) // 顶点依次从0-V-1开始
+		for(int i=0; i<V; ++i)
+			for(int j=0; j<V; ++j)
+				d[i][j] = min(d[i][j], d[i][k]+d[k][j]); // i到j的最短距离等于i到j的距离与i到k和k到j的距离的最小值
+	return;
+}
+\end{lstlisting}
 
 
 \end{document}
