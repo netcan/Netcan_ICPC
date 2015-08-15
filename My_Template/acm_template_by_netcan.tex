@@ -541,6 +541,56 @@ void floyd() {
 	return;
 }
 \end{lstlisting}
+\section{最小生成树}
+\subsection{Prim算法 $O(V^2)$}
+\begin{lstlisting}
+int cost[MAX_V][MAX_V]; // cost[u][v]表示边e=(u, v)的权值(不存在则INF)
+int mincost[MAX_V]; // 从集合出发的边到每个顶点的最小权值
+bool used[MAX_V]; // 顶点u是否在集合中
+int V; // 顶点数
 
+int prim() {
+	int res = 0;
+	memset(used, 0, sizeof(used));
+	memset(mincost, 0x3f, sizeof(mincost));
+	mincost[0] = 0;
+	while(true) {
+		int v = -1;
+		for(int u=0; u<V; ++u)
+			if(!used[u] && ( v==-1 || mincost[u] < mincost[v])) v = u;
+		if(v == -1) break;
+		used[v] = true; // 标记顶点到集合中
+		res += mincost[v];
+		for(int u=0; u<V; ++u)
+			mincost[u] = min(mincost[u], cost[v][u]);
+	}
+	return res;
+}
+\end{lstlisting}
+
+\subsection{Kruskal算法 $O(E log(V))$}
+\begin{lstlisting}
+int V, E; // 边数，顶点数
+struct edge { // 边
+	int u, v, cost;
+	bool operator<(const edge &b) const {
+		return cost < b.cost; // 需要按照边的权值从小到大的顺序排序
+	}
+} es[MAX_E];
+
+int kruskal() {
+	sort(es, es+E); // 排序
+	init_union_find(V); // 初始化并查集
+	int res = 0;
+	for(int i=0; i<E; ++i) {
+		edge e = es[i];
+		if(find(e.u) != find(e.v)) { // 判断是否产生圈（重边也算在内）
+			unite(e.u, e.v);
+			res+=e.cost;
+		}
+	}
+	return res;
+}
+\end{lstlisting}
 
 \end{document}
