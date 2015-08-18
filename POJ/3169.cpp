@@ -28,6 +28,7 @@
 #include <cstring>
 using namespace std;
 
+// 差分约束系统， 隐含条件: d[i] <= d[i+1]
 int N, ML, MD;
 const int INF = 0x3f3f3f3f;
 int d[1005];
