@@ -2,7 +2,7 @@
 \usepackage{listings, graphicx, color, soul, xcolor, bm, geometry, fancyhdr, makeidx,CJK, fontspec, amsmath, savesym}
 \usepackage[colorinlistoftodos]{todonotes}
 \usepackage[colorlinks,linkcolor=black]{hyperref}
-\setmonofont[Mapping={}]{Monaco} %英文引号之类的正常显示，相当于设置英文字体
+\setmonofont[Mapping={}]{Monaco}	%英文引号之类的正常显示，相当于设置英文字体
 \setsansfont{Monaco} %设置英文字体 Monaco, Consolas,  Fantasque Sans Mono
 \setmainfont{Monaco} %设置英文字体
 % \setCJKmainfont{方正兰亭黑简体}  %中文字体设置
@@ -518,6 +518,17 @@ void dijkstra(int s) {
 	}
 }
 \end{lstlisting}
+
+
+
+\subsection{差分约束系统}
+如果一个系统由n个变量和m个约束条件组成，其中每个约束条件形如$x_j-x_i \le b_k$ $(i,j \in [1,n],k \in [1,m])$,则称其为差分约束系统(system of difference constraints)。亦即，差分约束系统是求解关于一组变量的特殊不等式组的方法。
+
+求解差分约束系统，可以转化成图论的单源最短路径（或最长路径）问题。
+
+观察$x_j-x_i \le b_k$，会发现它类似最短路中的三角不等式 $d[v] \le d[u]+w[u,v]$，即$d[v]-d[u] \le w[u,v]$。因此，以每个变量$x_i$为结点，对于约束条件$x_j-x_i<=b_k$，连接一条边$(i,j)$，边权为$b_k$。我们再增加一个源点s，s与所有定点相连，边权均为0。对这个图，以s为源点运行Bellman-ford算法(或SPFA算法)，最终${d[i]}$即为一组可行解。
+
+
 
 
 
