@@ -528,6 +528,34 @@ void dijkstra(int s) {
 
 观察$x_j-x_i \le b_k$，会发现它类似最短路中的三角不等式 $d[v] \le d[u]+w[u,v]$，即$d[v]-d[u] \le w[u,v]$。因此，以每个变量$x_i$为结点，对于约束条件$x_j-x_i<=b_k$，连接一条边$(i,j)$，边权为$b_k$。我们再增加一个源点s，s与所有定点相连，边权均为0。对这个图，以s为源点运行Bellman-ford算法(或SPFA算法)，最终${d[i]}$即为一组可行解。
 
+例如：
+$$
+\begin{cases}
+   b-a \le 3  & (1)\cr
+   c-b \le 2  & (2)\cr
+   c-a \le 4 & (3)\cr
+\end{cases}
+$$
+
+求出c-a的最大值。
+
+建立如下有向图
+\begin{center}
+	\includegraphics[width=3cm] {sodc.png}
+\end{center}
+
+根据条件有
+
+$$
+\begin{cases}
+c-a \le 4 & (4)\cr
+c-a \le 3+2 = 5 & (5) \cr
+\end{cases}
+$$
+
+最短路即为c-a的最大值，即4。
+
+
 
 
 
