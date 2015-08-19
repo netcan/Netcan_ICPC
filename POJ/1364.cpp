@@ -28,6 +28,22 @@
 #include <cstring>
 using namespace std;
 
+/*
+题目大意:现在假设有一个这样的序列，S={a1，a2，a3，a4...ai...at}
+其中ai=a*si,其实这句可以忽略不看
+现在给出一个不等式，使得ai+a(i+1)+a(i+2)+...+a(i+n)<ki或者是ai+a(i+1)+a(i+2)+...+a(i+n)>ki
+首先给出两个数分别代表S序列有多少个数，有多少个不等式
+不等式可以这样描述
+给出四个参数第一个数i可以代表序列的第几项，然后给出n，这样前面两个数就可以描述为ai+a(i+1)+...a(i+n)，即从i到n的连续和，再给出一个符号和一个ki
+当符号为gt代表‘>’,符号为lt代表‘<'
+那么样例可以表示
+1 2 gt 0
+a1+a2+a3>0
+2 2 lt 2
+a2+a3+a4<2
+最后问你所有不等式是否都满足条件，若满足输出lamentable kingdom，不满足输出successful conspiracy，这里要注意了，不要搞反了
+ */
+
 struct edge{
 	int u, v, cost;
 } es[102];
