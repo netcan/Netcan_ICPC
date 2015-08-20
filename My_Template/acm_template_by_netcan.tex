@@ -77,13 +77,32 @@ const long long fac[21]={1,1,2,6,24,120,720,5040,40320,362880,
 $$D(n) = (n-1)[D(n-1)+D(n-2)]$$
 \section{最小公倍数$lcm(a,b)$ \&\& 最大公约数$gcd(a,b)$}
 \begin{lstlisting}
-inline int gcd(int a, int b) {
+inline int gcd(int a, int b) { // 如果a<b，则递归得gcd(b,a%b)即gcd(b, a)，即交换了位置，时间复杂度O(log max(a, b))
 	return b==0?a:gcd(b,a%b)
 }
 inline int lcm(int a, int b) {
 	return a/gcd(a,b)*b;
 }
 \end{lstlisting}
+\section{扩展欧几里得}
+求解$a x + b y = gcd(a, b)$
+这里得到的是一组$(x, y)$的可行解，$(x+k b, y-k a)$为解集。
+\begin{lstlisting}
+int extgcd(int a, int b, int &x, int &y) { // x, y为解，返回gcd(a, b)
+	int d = a;
+	if(b!=0) {
+		d = extgcd(b, a%b, y, x);
+		y -= (a/b)*x;
+	}
+	else  {
+		x = 1; y = 0;
+	}
+	return d;
+}
+\end{lstlisting}
+
+
+
 \section{母函数}
 $G(x)=(1+x+x^2+\dots+x^N)(1+x^2+x^4+\dots+x^N)\dots(1+x^N)$展开后$x^N$的系数\underline{(注意溢出)}\\
 %\begin{lstlisting}
