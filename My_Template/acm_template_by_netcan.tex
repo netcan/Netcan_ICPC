@@ -271,7 +271,7 @@ int sieve(int n) { // 返回n以内的素数个数
 
 \begin{lstlisting}
 typedef long long ll;
-bool is_prime[MAX_L]; // 对区间[a, b]内的整数筛选，is_prime[i-a] == true表示i是素数
+bool is_prime[MAX_L]; // 对区间[a, b]内的整数筛选，is_prime[i-a] == true表示i是素数, MAX_L = B-A+1
 bool is_prime_small[MAX_SQRT_B]; 
 
 void segment_sieve(ll a, ll b) {
