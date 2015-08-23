@@ -32,7 +32,6 @@ using namespace std;
 typedef long long ll;
 vector<ll> x, y;
 
-
 void solve() {
 	int T;
 	int Case = 1;
