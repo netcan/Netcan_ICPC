@@ -32,8 +32,6 @@ bool Map[45][45]; // 矩阵信息
 int a[45]; // 第i行最后一个1的位置a[i]
 int N;
 
-
-
 void solve() {
 	int  T;
 	cin >> T;
