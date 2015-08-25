@@ -70,7 +70,7 @@ void solve() {
 				if(Map[i][j] == '@') {
 					s.x = i;
 					s.y = j;
-					Map[i][j] = '#';
+					Map[i][j] = '#'; // 这里标记起点不可访问,因为DFS会跳过起点
 				}
 			}
 		}
@@ -81,7 +81,7 @@ void solve() {
 		// }
 		ans = 0;
 		dfs(s.x, s.y);
-		cout << ans+1 << endl;
+		cout << ans+1 << endl; // 加上起点。
 	}
 }
 
