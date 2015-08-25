@@ -48,14 +48,22 @@ void dfs(int i, int j) {
 		if(Map[n.x][n.y] == '.' && n.x >=0 && n.x<H && n.y>=0 && n.y<W) { // 这里不能忘了边界条件！！！
 			Map[n.x][n.y] = 'o';
 			++ans;
+
+			// Debug
 			// system("clear");
 			// printf("(%d, %d) ans = %d\n", n.x, n.y, ans);
 			// for(int i=0; i<H; ++i) {
 				// for(int j=0; j<W; ++j)
-					// printf("\%c", Map[i][j]);
+					// if(i == s.x && j == s.y)
+						// printf("\e[32m@\e[0m");
+					// else if(Map[i][j] == 'o')
+						// printf("\e[36m%c\e[0m", Map[i][j]);
+					// else
+						// printf("%c", Map[i][j]);
 				// cout << endl;
 			// }
 			// usleep(100000);
+
 			dfs(n.x, n.y);
 		}
 	}
