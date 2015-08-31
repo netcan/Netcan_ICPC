@@ -48,7 +48,7 @@ void dfs(int i) {
 		// for(int i=0; i<N; ++i) cout << data[0][i] << " ";
 		if(cal() == SUM) {
 			flag = true;
-			memcpy(ans, data[0], sizeof(data[0]));
+			memcpy(ans, data[0], sizeof(data[0])); // 因为是从1-N枚举，所以最开始的那个字典序最小
 		}
 		return;
 	}
