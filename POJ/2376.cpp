@@ -38,7 +38,6 @@ struct interval {
 } I[25010];
 int N, T;
 
-
 void solve() {
 	scanf("%d%d", &N, &T);
 	int maxe = 0, mins = 1<<30;
@@ -51,7 +50,6 @@ void solve() {
 		printf("-1\n");
 		return;
 	}
-
 	sort(I, I+N);
 	int j = 0;
 	int t = I[j].e;
