@@ -28,6 +28,7 @@
 #include <cstring>
 using namespace std;
 
+// 有N头牛，在一些畜栏中吃草，每个畜栏在同一时间段只能提供给一头牛吃草，所以可能会需要多个畜栏，给定  N 头牛和每头牛开始吃草和结束吃草的时间，求使用最小畜栏数目和每头牛对应的畜栏。
 struct Cow {
 	int start, end, id;
 	bool operator<(const Cow &b) const {
