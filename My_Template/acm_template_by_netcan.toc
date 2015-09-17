@@ -22,15 +22,17 @@
 \contentsline {chapter}{\numberline {第四章\hspace {0.3em}}数据结构}{12}{chapter.4}
 \contentsline {section}{\numberline {4.1}二叉搜索树}{12}{section.4.1}
 \contentsline {section}{\numberline {4.2}并查集}{13}{section.4.2}
-\contentsline {chapter}{\numberline {第五章\hspace {0.3em}}图}{15}{chapter.5}
-\contentsline {section}{\numberline {5.1}邻接表}{15}{section.5.1}
-\contentsline {subsection}{\numberline {5.1.1}样例1}{15}{subsection.5.1.1}
-\contentsline {subsection}{\numberline {5.1.2}样例2}{15}{subsection.5.1.2}
-\contentsline {section}{\numberline {5.2}单源最短路}{15}{section.5.2}
-\contentsline {subsection}{\numberline {5.2.1}Bellman-Ford算法$O(V*E)$}{15}{subsection.5.2.1}
-\contentsline {subsection}{\numberline {5.2.2}Dijkstra算法}{16}{subsection.5.2.2}
-\contentsline {subsection}{\numberline {5.2.3}差分约束系统}{17}{subsection.5.2.3}
-\contentsline {section}{\numberline {5.3}任意两点间的最短路}{18}{section.5.3}
-\contentsline {section}{\numberline {5.4}最小生成树}{18}{section.5.4}
-\contentsline {subsection}{\numberline {5.4.1}Prim算法 $O(V^2)$}{18}{subsection.5.4.1}
-\contentsline {subsection}{\numberline {5.4.2}Kruskal算法 $O(E log(V))$}{19}{subsection.5.4.2}
+\contentsline {chapter}{\numberline {第五章\hspace {0.3em}}字符串}{15}{chapter.5}
+\contentsline {section}{\numberline {5.1}KMP算法}{15}{section.5.1}
+\contentsline {chapter}{\numberline {第六章\hspace {0.3em}}图}{17}{chapter.6}
+\contentsline {section}{\numberline {6.1}邻接表}{17}{section.6.1}
+\contentsline {subsection}{\numberline {6.1.1}样例1}{17}{subsection.6.1.1}
+\contentsline {subsection}{\numberline {6.1.2}样例2}{17}{subsection.6.1.2}
+\contentsline {section}{\numberline {6.2}单源最短路}{17}{section.6.2}
+\contentsline {subsection}{\numberline {6.2.1}Bellman-Ford算法$O(V*E)$}{17}{subsection.6.2.1}
+\contentsline {subsection}{\numberline {6.2.2}Dijkstra算法}{18}{subsection.6.2.2}
+\contentsline {subsection}{\numberline {6.2.3}差分约束系统}{19}{subsection.6.2.3}
+\contentsline {section}{\numberline {6.3}任意两点间的最短路}{20}{section.6.3}
+\contentsline {section}{\numberline {6.4}最小生成树}{20}{section.6.4}
+\contentsline {subsection}{\numberline {6.4.1}Prim算法 $O(V^2)$}{20}{subsection.6.4.1}
+\contentsline {subsection}{\numberline {6.4.2}Kruskal算法 $O(E log(V))$}{21}{subsection.6.4.2}

@@ -483,6 +483,68 @@ bool same(int x,int y) { // 判断两个元素是否同集合
 \end{lstlisting}
 
 
+\chapter{字符串}
+\section{KMP算法}
+\url{http://www.cnblogs.com/goagent/archive/2013/05/16/3068442.html}\\
+求出模式串$P$在字符串$S$中的位置
+当失配前($P_j \neq S_i$)，有
+$$
+P_0P_1 \cdots P_{k-1} = S_{i-k}S_{i-k+1} \cdots S_{i-1} 
+$$
+已有部分匹配结果，
+$$
+P_{j-k}P_{j-k+1} \cdots P_{j-1} =  S_{i-k}S_{i-k+1} \cdots S_{i-1}
+$$
+由上两式子可得：
+$$
+P_0P_1 \cdots P_{k-1} = P_{j-k}P_{j-k+1} \cdots P_{j-1}
+$$
+定义$next[j] = k$，有
+$$
+next[j]=\begin{cases}
+	-1 & j=0\cr
+	max\{k|0<k<j \ \&\&\  P_0P_1 \cdots P_{k-1} = P_{j-k}P_{j-k+1} \cdots P_{j-1}\}\cr
+	0 & Other \  Conditions\cr
+\end{cases}
+$$
+\begin{lstlisting}
+int Next[MAX_PLEN];
+string s, p; // 求出模式串p在字符串s中的位置
+void getNext() {
+	Next[0] = -1;
+	int i=0, j=-1;
+	while(i!=p.length()-1) {
+		if(j == -1 || p[j] == p[i]) {
+			++i;
+			++j;
+			Next[i] = p[i] != p[j]?j:Next[j];
+		}
+		else
+			j = Next[j];
+	}
+}
+
+int kmp(const int sIndex = 0) // 返回模式串位置
+{
+	getNext();
+    int i = sIndex, j = 0;
+    while(i != s.length() && j != p.length()) {
+        if (j == -1 || s[i] == p[j]) {
+            ++i;
+            ++j;
+        }
+        else
+            j = next[j];
+    }
+    return j == p.length() ? i - j: -1;
+}
+\end{lstlisting}
+
+
+
+
+
+
 \chapter{图}
 \section{邻接表}
 \subsection{样例1}
