@@ -30,7 +30,6 @@ using namespace std;
 
 int N,M,T;
 int a[1000005], b[10005], Next[10005];
-
 void getNext() {
 	Next[0] = -1;
 	int i=0, j=-1;
