@@ -32,7 +32,7 @@ const int MAX_C = 26;
 struct Trie {
 	Trie *next[MAX_C];
 	int v;
-	void init() {
+	Trie() {
 		for(int i=0; i<MAX_C; ++i) next[i] = NULL;
 	}
 };
@@ -47,7 +47,6 @@ void createTrie(const string &str) {
 		if(p->next[id] == NULL) {
 			q = new Trie;
 			q->v = 1;
-			q->init();
 			p->next[id] = q;
 			p = p->next[id];
 		}
@@ -86,7 +85,6 @@ int main()
 #ifdef Oj
 	freopen("1251.in", "r", stdin);
 #endif
-	root->init();
 	string word;
 	while(getline(cin, word) && word!="")
 		createTrie(word);
