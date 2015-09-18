@@ -548,12 +548,11 @@ const int MAX_C = 26; // 假设全为小写字母
 struct Trie {
 	Trie *next[MAX_C];
 	int v; // 存放以此为前缀的个数
-	void init() {
+	Trie() {
 		for(int i=0; i<MAX_C; ++i) next[i] = NULL;
 	}
 };
 Trie *root = new Trie;
-root->init(); // 记得初始化，因为堆上的内存是随机的
 
 void createTrie(const string &str) { // 建立字典树
 	Trie *p = root, *q;
@@ -562,7 +561,6 @@ void createTrie(const string &str) { // 建立字典树
 		if(p->next[id] == NULL) {
 			q = new Trie;
 			q->v = 1;
-			q->init();
 			p->next[id] = q;
 			p = p->next[id];
 		}
