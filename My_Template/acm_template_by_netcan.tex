@@ -484,10 +484,10 @@ bool same(int x,int y) { // 判断两个元素是否同集合
 
 
 \chapter{字符串}
-\section{KMP算法}
+\section{KMP算法 $O(M+N)$}
 \url{http://www.cnblogs.com/goagent/archive/2013/05/16/3068442.html}\\
 求出模式串$P$在字符串$S$中的位置
-当失配前($P_j \neq S_i$)，有
+当失配前($P_j \neq S_i$)，满足
 $$
 P_0P_1 \cdots P_{k-1} = S_{i-k}S_{i-k+1} \cdots S_{i-1} 
 $$
@@ -541,9 +541,57 @@ int kmp(const int sIndex = 0) // 返回模式串位置
 \end{lstlisting}
 
 
+\section{字典树}
+\url{http://www.cnblogs.com/tanky_woo/archive/2010/09/24/1833717.html} \\
+\begin{lstlisting}
+const int MAX_C = 26; // 假设全为小写字母
+struct Trie {
+	Trie *next[MAX_C];
+	int v; // 存放以此为前缀的个数
+	void init() {
+		for(int i=0; i<MAX_C; ++i) next[i] = NULL;
+	}
+};
+Trie *root = new Trie;
+root->init();
+
+void createTrie(const string &str) { // 建立字典树
+	Trie *p = root, *q;
+	for(int i=0; i<str.length(); ++i) {
+		int id = str[i] - 'a';
+		if(p->next[id] == NULL) {
+			q = new Trie;
+			q->v = 1;
+			q->init();
+			p->next[id] = q;
+			p = p->next[id];
+		}
+		else {
+			++(p->next[id]->v);
+			p = p->next[id];
+		}
+	}
+	// p->v = -1; // 结尾
+}
+
+int findTrie(const string &w) { // 查找字典树
+	Trie *p = root;
+	for(int i=0; i<w.length(); ++i) {
+		int id = w[i] - 'a';
+		p = p->next[id];
+		if(p == NULL) return 0; // 空集，则不存在以此为前缀的串
+	}
+	return p->v; // 此字符串是字符集某串的前缀
+}
+
+void freeTrie(Trie *p) { // 释放内存
+	if(p == NULL) return;
+	for(int i=0; i<MAX_C; ++i) freeTrie(p->next[i]);
+	delete p;
+}
 
 
-
+\end{lstlisting}
 
 \chapter{图}
 \section{邻接表}
