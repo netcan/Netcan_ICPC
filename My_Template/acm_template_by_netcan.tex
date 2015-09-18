@@ -553,7 +553,7 @@ struct Trie {
 	}
 };
 Trie *root = new Trie;
-root->init();
+root->init(); // 记得初始化，因为堆上的内存是随机的
 
 void createTrie(const string &str) { // 建立字典树
 	Trie *p = root, *q;
