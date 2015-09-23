@@ -40,8 +40,9 @@ void solve() {
 	for(int t=1; t<=T; ++t) {
 		dp[t][0] = dp[t-1][0] + (a[t] == 1);
 		for(int w=1; w<=W; ++w) // 奇数在tree2，偶数在tree1
-			if(w & 1) dp[t][w] = max(dp[t-1][w-1], dp[t-1][w]) + (a[t] == 2); // 在tree2
-			else dp[t][w] = max(dp[t-1][w-1], dp[t-1][w]) + (a[t] == 1); // 在tree1
+			// if(w & 1) dp[t][w] = max(dp[t-1][w-1], dp[t-1][w]) + (a[t] == 2); // 在tree2
+			// else dp[t][w] = max(dp[t-1][w-1], dp[t-1][w]) + (a[t] == 1); // 在tree1
+			dp[t][w] = max(dp[t-1][w-1], dp[t-1][w]) + (a[t] == w%2 + 1); // 当前w步是由w-1步移过来的或者原地不动
 	}
 	for(int i=0; i<=W; ++i) maxa = max(dp[T][i], maxa);
 	cout << maxa << endl;
