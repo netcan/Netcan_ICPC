@@ -35,7 +35,7 @@ int data[40005];
 int find(int x) {
 	int l=0, r=p;
 	int mid;
-	while(l+1 <= r) {
+	while(l+1 <= r) { // [l, r)半开半闭区间
 		// printf("(%d,%d), %d\n", l, r, x);
 		mid = (l+r) >> 1;
 		if(dp[mid] > x) r = mid;
