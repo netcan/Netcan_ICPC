@@ -32,11 +32,26 @@ int dp[40005]; // dp[i]表示前i-1个最长递增子序列的最小值
 int p;
 int data[40005];
 
+int find(int x) {
+	int l=0, r=p;
+	int mid;
+	while(l+1 <= r) {
+		// printf("(%d,%d), %d\n", l, r, x);
+		mid = (l+r) >> 1;
+		if(dp[mid] > x) r = mid;
+		else if(dp[mid] < x) l = mid+1;
+		else return mid;
+	}
+	return l;
+}
+
 void solve() {
 	memset(dp,0x3f, sizeof(dp));
 	for(int i=0; i<p; ++i)
-		*lower_bound(dp, dp+p, data[i]) = data[i];
-	cout << lower_bound(dp, dp+p, 0x3f3f3f3f) - dp << endl;
+		dp[find(data[i])] = data[i];
+	int ans = 0;
+	for(ans=0; dp[ans] != 0x3f3f3f3f; ++ans);
+	cout << ans << endl;
 
 }
 
@@ -45,6 +60,7 @@ int main()
 #ifdef Oj
 	freopen("1950.in", "r", stdin);
 #endif
+	cin.sync_with_stdio(false);
 	int T;
 	cin >> T;
 	while(T--) {
