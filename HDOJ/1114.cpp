@@ -38,11 +38,9 @@ void solve() {
 	int W = F-E;
 	memset(dp, 0x3f, sizeof(dp));
 	dp[0] = 0;
-	for(int i=0; i<N; ++i) {
-		for(int j=0; j<=W; ++j)
-			if(j < w[i]) dp[j] = dp[j];
-			else dp[j] = min(dp[j], dp[j-w[i]] + p[i]);
-	}
+	for(int i=0; i<N; ++i)
+		for(int j=w[i]; j<=W; ++j)
+			dp[j] = min(dp[j], dp[j-w[i]] + p[i]);
 	if(dp[W] != 0x3f3f3f3f)
 		printf("The minimum amount of money in the piggy-bank is %d.\n", dp[W]);
 	else
