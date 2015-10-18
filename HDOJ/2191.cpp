@@ -41,6 +41,7 @@ void solve() {
 			for(int k=n; k>=p[i]; --k)
 				dp[k] = max(dp[k], dp[k-p[i]] + h[i]);
 	cout << dp[n] << endl;
+
 	// for(int i=0; i<m; ++i) {
 		// for(int j=0; j<=n; ++j) {
 			// for(int k=0; k*p[i]<=j && k<=c[i]; ++k)
