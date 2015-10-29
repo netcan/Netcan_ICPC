@@ -71,7 +71,7 @@ struct Trie {
 			int p = que.front(); que.pop();
 
 			for(int i=0; i<max_c; ++i)
-				if(next[p][i] == -1) next[p][i] = next[fail[p]][i]; // 方便后面match的fail转移
+				if(next[p][i] == -1) next[p][i] = next[fail[p]][i]; // 方便后面match失配的fail转移
 				else {
 					fail[next[p][i]] = next[fail[p]][i];
 					que.push(next[p][i]);
