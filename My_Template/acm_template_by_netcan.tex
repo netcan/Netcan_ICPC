@@ -129,8 +129,73 @@ for(int i=2; i<=N; ++i) { // 从第二个表达式开始
 其中$N_i$为$A_i$的个数，则注意初始化为1的时候，第一项个数不要超过$N_1$，且每隔$A_1$初始化为1。
 \section{动态规划}
 \subsection{01背包}
+$N$个物品重量和价值分别为$w_i, v_i$，从这些物品中挑出总重量不超过$W$的物品，求所有挑选方案中价值总和最大。
+设$dp[i+1][j]$为前ｉ个物品总重量不超过ｊ时最大价值
+
+$$dp[i+1][j] = \begin{cases}
+dp[i][j] & j < w[i] \cr
+max(dp[i][j-w[i]]+v[i], dp[i][j]) & j \geq w[i] 
+\end{cases}
+$$
+
+\begin{lstlisting}
+int dp[MAX_W + 1];
+memset(dp, 0, sizeof(dp));
+for(int i=0; i<N; ++i)
+	for(int j=W; j>=w[i]; --j) // 注意逆序，保证前面的是未使用的
+		dp[j] = max(dp[j], dp[j-w[i]]+v[i]);
+\end{lstlisting}
+
 \subsection{多重背包}
+$N$种物品重量和价值和个数分别为$w_i, v_i, n_i$，从这些物品中挑出总重量不超过$W$的物品，求所有挑选方案中价值总和最大。
+$$dp[i+1][j] = max(dp[i][j-k \times w[i]] + k\times v[i] | 0\leq k \leq n_i \&\& k \times w[i] \leq j) $$
+
+相当于$n_i$个01背包。
+\begin{lstlisting}
+int dp[MAX_W + 1];
+memset(dp, 0, sizeof(dp));
+for(int i=0; i<N; ++i)
+	for(int j=0; j<n[i]; ++j) // n[i]个01背包
+		for(int k=W; k>=w[i]; --k)
+			dp[k] = max(dp[k], dp[k-w[i]]+v[i]);
+\end{lstlisting}
+
+二进制优化下
+\begin{lstlisting}
+int dp[MAX_W + 1];
+memset(dp, 0, sizeof(dp));
+for(int i=0; i<N; ++i) {
+	int num = n[i];
+	for(int j=1; j<=num; j<<=1) {
+		for(int k=W; k>=j*w[i]; --k)
+			dp[k] = max(dp[k], dp[k-j*w[i]]+j*v[i]);
+		num-=j;
+	}
+	if(num)
+		for(int k=W; k>=num*w[i]; --k)
+			dp[k] = max(dp[k], dp[k-num*w[i]]+num*v[i]);
+}
+\end{lstlisting}
+
 \subsection{完全背包}
+$N$种物品重量和价值分别为$w_i, v_i$，每种物品无限个，从这些物品中挑出总重量不超过$W$的物品，求所有挑选方案中价值总和最大。
+$$
+\begin{aligned}
+dp[i+1][j] &= max\{dp[i][j-k\times w[i]]+k \times v[i] | 0 \leq k\} \\
+&=max(dp[i][j], max\{dp[i][j-k\times w[i]]+k \times v[i] | 1 \leq k\}) \\
+&=max(dp[i][j], max\{dp[i][(j-w[i])-k\times w[i]] + k\times v[i]|0\leq k\} + v[i]) \\
+&=max(dp[i][j], dp[i+1][j-w[i]]+v[i]) 
+\end{aligned}$$
+
+\begin{lstlisting}
+int dp[MAX_W + 1];
+memset(dp, 0, sizeof(dp));
+for(int i=0; i<N; ++i)
+	for(int j=w[i]; j<=W; ++j) // 正序
+		dp[j] = max(dp[j], dp[j-w[i]]+v[i]);
+\end{lstlisting}
+
+
 \subsection{最长公共子序列}
 $$
 dp[i+1][j+1]=\begin{cases}
@@ -183,9 +248,58 @@ upper_bound(a, a+n, k) - lower_bound(a, a+n, k)
 \end{lstlisting}
 
 \subsection{多重部分和}
-\subsection{多重集的组合数}
-\subsection{划分数}
+有$n$种大小不同的数字$a_i$，每种$m_i$个，判断是否可以从这些数字中选出若干个使他们的和恰好为K。
 
+设$dp[i+1][j]$为前$i$种数加和为$j$时第$i$种数最多能剩余多少个。（不能得到为-1）
+$$dp[i+1][j] = \begin{cases}
+m_i & (dp[i][j] >= 0) \cr
+-1 & (j < a_i \ Or\  dp[i+1][j-a_i] \leq 0 \cr
+dp[i+1][j-a_i] - 1 & Other
+\end{cases}
+$$
+\begin{lstlisting}
+int dp[MAX_K+1];
+memset(dp, -1, sizeof(dp));
+dp[0] = 0;
+for(int i=0; i<n; ++i) {
+	for(int j=0; j<=K; ++j) {
+		if(dp[j] >= 0) dp[j] = m[i]; // 前i-1个数已经能凑成j了
+		else if(j < a[i] || dp[j-a[i]] <= 0) dp[j] = -1; // 否则，凑不成j或者a[i]已经用完，则无法满足
+		else dp[j] = dp[j-a[i]] - 1; // 否则可以凑成
+	}
+}
+\end{lstlisting}
+\subsection{多重集的组合数}
+有$n$种物品，第$i$种有$a_i$个。不同种类的物品可以相互区分但相同种类的物品无法区分。从这些物品中取出$m$个的话，有多少种取法。结果取$Mod$。
+
+设$dp[i+1][j]$为从前i个物品取出j个的组合数
+$$
+\begin{aligned}
+dp[i+1][j] &= \sum_{k=0}^{min(j, a[i])} dp[i][j-k] \\
+&=\sum_{k=0}^{min(j-1, a[i])} dp[i][j-1-k] + dp[i][j] - dp[i][j-1-a[i]] \\
+&=dp[i+1][j-1] + dp[i][j] - dp[i][j-1-a[i]]
+\end{aligned}
+$$
+
+\begin{lstlisting}
+int dp[MAX_N+1][MAX_M+1];
+
+for(int i=0; i<=n; ++i) dp[i][0] = 1; // 一个都不取
+for(int i=0; i<n; ++i) {
+	for(int j=1; j<=m; ++j) {
+		if(j-1-a[i] >= 0)
+			dp[i+1][j] = (dp[i+1][j-1] + dp[i][j] - dp[i][j-1-a[i]] + MOD) % MOD; // 避免减法出现负数
+		else
+			dp[i+1][j] = (dp[i+1][j-1] + dp[i][j]) % MOD;
+	}
+}
+\end{lstlisting}
+
+\subsection{划分数}
+有$n$个无区别的物品，将它们划分成不超过$m$组，求出划分方法数，取Mod。
+
+设$dp[i][j]$为$j$的$i$划分的总数。
+$$dp[i][j] = dp[i][j-i]+dp[i-1][j]$$
 
 
 
@@ -598,8 +712,83 @@ void freeTrie(Trie *p) { // 释放内存
 	delete p;
 }
 
-
 \end{lstlisting}
+\section{AC自动机}
+参考kuangbin模板。静态版。
+
+\begin{lstlisting}
+struct Trie {
+	static const int max_L = 500010;
+	static const int max_c = 26;
+	int cnt[max_L]; // 单词结尾节点统计该单词个数
+	int fail[max_L]; // fail指针
+	int next[max_L][max_c];
+	int root, L; // 根指针，当前最大有效节点指针
+	int newnode() {
+		for(int i=0; i<max_c;++i)
+			next[L][i] = -1;
+		cnt[L++] = 0;
+		return L-1;
+	}
+	void init() {
+		L = 0;
+		root = newnode();
+	}
+
+	void insert(const char *s) { // 建立Trie树
+		int len = strlen(s);
+		int p = root;
+		for(int i=0; i<len; ++i) {
+			int id = s[i] - 'a';
+			if(next[p][id] == -1) next[p][id] = newnode();
+			p = next[p][id];
+		}
+		++cnt[p];
+	}
+
+	void build() {
+		queue<int> que;
+		fail[root] = root; // 根fail指针指向根，避免多余的判断
+		for(int i=0; i<max_c; ++i) // 处理root的后继节点，都指向root
+			if(next[root][i] == -1) next[root][i] = root;
+			else {
+				fail[next[root][i]] = root;
+				que.push(next[root][i]);
+			}
+
+		while(!que.empty()) {
+			int p = que.front(); que.pop();
+
+			for(int i=0; i<max_c; ++i)
+				if(next[p][i] == -1) next[p][i] = next[fail[p]][i]; // 方便后面match失配的fail转移
+				else {
+					fail[next[p][i]] = next[fail[p]][i];
+					que.push(next[p][i]);
+				}
+		}
+	}
+
+	int match(const char *s) {
+		int len = strlen(s);
+		int p = root;
+		int res = 0;
+		for(int i=0; i<len; ++i) {
+			int id = s[i] - 'a';
+			p = next[p][id];
+			int tmp = p;
+			while(tmp != root) {
+				res += cnt[tmp];
+				cnt[tmp] = 0;
+				tmp = fail[tmp];
+			}
+		}
+		return res;
+	}
+
+};
+\end{lstlisting}
+
+
 
 \chapter{图}
 \section{邻接表}
