@@ -27,7 +27,7 @@
 #include <utility>
 #include <cstring>
 using namespace std;
-int F, N, M, W;
+int F, N, M, W; // 农场数，区域数，道路数，虫洞数
 struct edge {
 	int from, to, cost;
 } es[5300];
@@ -37,7 +37,7 @@ int d[505];
 
 const int INF = 0x3f3f3f3f;
 
-bool bellman_ford(int s) {
+bool bellman_ford(int s) { // 判断是否有负边
 	memset(d, 0x3f, sizeof(d));
 	d[s] = 0;
 	int Es = 2*M+W;
@@ -48,7 +48,7 @@ bool bellman_ford(int s) {
 		}
 	int flag = true;
 	for(int j=0; j<Es; ++j)
-		if(d[es[j].to] > d[es[j].from] + es[j].cost) {
+		if(d[es[j].to] > d[es[j].from] + es[j].cost) { // 负边判断, 有负边
 			flag = false;
 			break;
 		}
@@ -73,16 +73,16 @@ int main()
 		for(int i=0; i<M; ++i) {
 			scanf("%d%d%d", &S, &E, &T);
 
-			es[i].from = es[i+M].to= S;
+			es[i].from = es[i+M].to= S; // 双向边
 			es[i].to = es[i+M].from = E;
 			es[i].cost = es[i+M].cost = T;
 		}
 		for(int i=0; i<W; ++i) {
 			scanf("%d%d%d", &S, &E, &T);
 
-			es[i+2*M].from = S;
+			es[i+2*M].from = S; // 虫洞单向边
 			es[i+2*M].to = E;
-			es[i+2*M].cost = -T;
+			es[i+2*M].cost = -T; // 时间倒流, -T
 		}
 		solve();
 	}
