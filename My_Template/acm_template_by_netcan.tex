@@ -819,6 +819,31 @@ int main()
 
 
 \subsection{样例2}
+\section{拓扑排序}
+首先将入度为0的顶点入队,然后在队列中依次取出顶点并删除出边(将指向的顶点入度-1),若指向节点入度为0,则入队。直到队列为空。
+
+\begin{lstlisting}
+int V, E;
+vector<int> G[MAXV]; // 邻接表
+vector<int> order; // 拓扑排序结果
+int indegree[MAXV]; // 入度, 注意重边
+
+void top_sort() {
+	order.clear();
+	priority_queue<int, vector<int>, greater<int> > que; // 最小堆，按照从小到大的顺序输出
+	for(int u=1; u<=N; ++u) if(indegree[u] == 0) que.push(u); // 将入度为0的顶点入队
+	int u;
+	while(!que.empty()) { // 直到队列为空
+		u = que.top(); que.pop(); // 出队
+		order.push_back(u); // 记录拓扑排序结果
+		for(int i = 0; i<G[u].size(); ++i) { // 注意重边
+			--indegree[G[u][i]]; // 删除出边
+			if(indegree[G[u][i]] == 0) que.push(G[u][i]); // 入度为0，入队
+		}
+	}
+}
+\end{lstlisting}
+
 \section{单源最短路}
 \subsection{Bellman-Ford算法$O(V*E)$}
 可以处理负圈。

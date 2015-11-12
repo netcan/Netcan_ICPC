@@ -36,12 +36,13 @@
 \contentsline {section}{\numberline {6.1}邻接表}{21}{section.6.1}
 \contentsline {subsection}{\numberline {6.1.1}样例1}{21}{subsection.6.1.1}
 \contentsline {subsection}{\numberline {6.1.2}样例2}{21}{subsection.6.1.2}
-\contentsline {section}{\numberline {6.2}单源最短路}{21}{section.6.2}
-\contentsline {subsection}{\numberline {6.2.1}Bellman-Ford算法$O(V*E)$}{21}{subsection.6.2.1}
-\contentsline {subsection}{\numberline {6.2.2}SPFA算法}{22}{subsection.6.2.2}
-\contentsline {subsection}{\numberline {6.2.3}Dijkstra算法}{23}{subsection.6.2.3}
-\contentsline {subsection}{\numberline {6.2.4}差分约束系统}{24}{subsection.6.2.4}
-\contentsline {section}{\numberline {6.3}任意两点间的最短路}{25}{section.6.3}
-\contentsline {section}{\numberline {6.4}最小生成树}{25}{section.6.4}
-\contentsline {subsection}{\numberline {6.4.1}Prim算法 $O(V^2)$}{25}{subsection.6.4.1}
-\contentsline {subsection}{\numberline {6.4.2}Kruskal算法 $O(E log(V))$}{26}{subsection.6.4.2}
+\contentsline {section}{\numberline {6.2}拓扑排序}{21}{section.6.2}
+\contentsline {section}{\numberline {6.3}单源最短路}{22}{section.6.3}
+\contentsline {subsection}{\numberline {6.3.1}Bellman-Ford算法$O(V*E)$}{22}{subsection.6.3.1}
+\contentsline {subsection}{\numberline {6.3.2}SPFA算法}{22}{subsection.6.3.2}
+\contentsline {subsection}{\numberline {6.3.3}Dijkstra算法}{23}{subsection.6.3.3}
+\contentsline {subsection}{\numberline {6.3.4}差分约束系统}{24}{subsection.6.3.4}
+\contentsline {section}{\numberline {6.4}任意两点间的最短路}{25}{section.6.4}
+\contentsline {section}{\numberline {6.5}最小生成树}{26}{section.6.5}
+\contentsline {subsection}{\numberline {6.5.1}Prim算法 $O(V^2)$}{26}{subsection.6.5.1}
+\contentsline {subsection}{\numberline {6.5.2}Kruskal算法 $O(E log(V))$}{26}{subsection.6.5.2}
