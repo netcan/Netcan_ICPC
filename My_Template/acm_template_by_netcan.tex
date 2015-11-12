@@ -821,6 +821,8 @@ int main()
 \subsection{样例2}
 \section{单源最短路}
 \subsection{Bellman-Ford算法$O(V*E)$}
+可以处理负圈。
+
 \begin{lstlisting}
 struct Edge{ // 边
 	int from, to, cost; // 顶点from指向to权值为cost
@@ -845,6 +847,52 @@ bool bellman_ford(int s) { // 求解顶点s出发到所有节点的最短距离
 			break;
 		}
 	return flag;
+}j
+\end{lstlisting}
+\subsection{SPFA算法}
+
+Bellman\_ford优化版，同样可以处理负圈。
+\begin{lstlisting}
+struct edge {
+	int to, cost;
+	edge(int to, int cost) : to(to), cost(cost) {}
+};
+
+int V, E; // 节点数，边数
+int d[MAXV]; // 单源最短距离
+vector<edge> G[MAXV]; // 图， 邻接表
+bool vinque[MAXV]; // 判断节点是否已经在队列中
+int cnt[MAXV]; // 记录每个节点入队次数，超过V则退出（有负圈）。
+
+bool SPFA(int s) {
+	memset(d, 0x3f, sizeof(d));
+	memset(vinque, 0, sizeof(vinque));
+	memset(cnt, 0, sizeof(cnt));
+	d[s] = 0;
+	queue<int> que; // 入队，存储SPFA需要松弛计算的节点
+	que.push(s);
+	vinque[s] = true;
+	cnt[s] = 1;
+	while(!que.empty()) {
+		int from = que.front(); que.pop();
+		vinque[from] = false;
+		for(int i=0; i<G[from].size(); ++i) {
+			edge *t = &G[from][i]; // 据说用指针可以提高寻址速度。。
+			if(d[t->to] > d[from] + t->cost) {
+				d[t->to] = d[from] + t->cost; // 松弛计算
+				if(!vinque[t->to]) { // 该节点未入队，将其入队
+					que.push(t->to);
+					vinque[t->to] = true;
+					++cnt[t->to]; // 入队次数加一
+					if(cnt[t->to] > V) { // 该节点松弛计算次数大于总节点数，有负边
+						// while(!que.empty()) que.pop();
+						return false;
+					}
+				}
+			}
+		}
+	}
+	return true;
 }
 \end{lstlisting}
 
