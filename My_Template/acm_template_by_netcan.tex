@@ -880,14 +880,14 @@ bool SPFA(int s) {
 		int from = que.front(); que.pop();
 		vinque[from] = false;
 		for(int i=0; i<G[from].size(); ++i) {
-			edge *t = &G[from][i]; // 据说用指针可以提高寻址速度。。
-			if(d[t->to] > d[from] + t->cost) {
-				d[t->to] = d[from] + t->cost; // 松弛计算
-				if(!vinque[t->to]) { // 该节点未入队，将其入队
-					que.push(t->to);
-					vinque[t->to] = true;
-					++cnt[t->to]; // 入队次数加一
-					if(cnt[t->to] > V) { // 该节点松弛计算次数大于总节点数，有负边
+			edge &t = G[from][i]; // 据说用引用/指针可以提高寻址速度。。
+			if(d[t.to] > d[from] + t.cost) {
+				d[t.to] = d[from] + t.cost; // 松弛计算
+				if(!vinque[t.to]) { // 该节点未入队，将其入队
+					que.push(t.to);
+					vinque[t.to] = true;
+					++cnt[t.to]; // 入队次数加一
+					if(cnt[t.to] > V) { // 该节点松弛计算次数大于总节点数，有负边
 						// while(!que.empty()) que.pop();
 						return false;
 					}
