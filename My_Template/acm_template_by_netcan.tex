@@ -78,7 +78,7 @@ $$D(n) = (n-1)[D(n-1)+D(n-2)]$$
 \section{最小公倍数$lcm(a,b)$ \&\& 最大公约数$gcd(a,b)$}
 \begin{lstlisting}
 inline int gcd(int a, int b) { // 如果a<b，则递归得gcd(b,a%b)即gcd(b, a)，即交换了位置，时间复杂度O(log max(a, b))
-	return b==0?a:gcd(b,a%b)
+	return b==0?a:gcd(b,a%b);
 }
 inline int lcm(int a, int b) {
 	return a/gcd(a,b)*b;
