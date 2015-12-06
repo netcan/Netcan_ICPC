@@ -49,10 +49,10 @@ ll mod_pow(ll x, ll n, ll mod) {  // a^b%mod
 	return res;
 }
 
-//以a为基,n-1=x*2^t      a^(n-1)=1(mod n)  验证n是不是合数
+//以a为基,n-1=u*2^t      a^(n-1)=1(mod n)  验证n是不是合数
 //一定是合数返回true,不一定返回false
-bool check(ll a, ll n, ll x, ll t) {
-	ll ret = mod_pow(a, x, n);
+bool witness(ll a, ll n, ll u, ll t) {
+	ll ret = mod_pow(a, u, n);
 	ll last = ret;
 	for(int i=1; i<=t; ++i) {
 		ret = mod_mult(ret, ret, n);
@@ -64,17 +64,18 @@ bool check(ll a, ll n, ll x, ll t) {
 }
 
 // Miller_Rabin()算法素数判定
-//是素数返回true.(可能是伪素数，但概率极小)
+//是素数返回true.(可能是伪素数，但概率极小，P=(1/2)^s)
 //合数返回false;
-bool Miller_Rabin(ll n, int times) {
+// s:挑选s个随机数
+bool Miller_Rabin(ll n, int s) {
 	if(n==2) return true;
 	if(n < 2 || !(n&1)) return false;
-	ll x=n-1;
+	ll u=n-1;
 	ll t=0;
-	while(!(x&1)) {x>>=1; ++t;}
-	for(int i=0; i<times; ++i) {
-		ll a=rand()%(n-1)+1;
-		if(check(a, n, x, t)) return false; // 合数
+	while(!(u&1)) {u>>=1; ++t;}
+	for(int i=0; i<s; ++i) {
+		ll a=rand()%(n-1)+1; // 若n为合数，证据为a的概率至少为1/2
+		if(witness(a, n, u, t)) return false; // 合数
 	}
 	return true;
 }
@@ -85,21 +86,20 @@ bool Miller_Rabin(ll n, int times) {
 vector<ll> factors; // 质因数分解结果（无序）
 
 inline ll gcd(ll a, ll b) {
-	if(a<0) return gcd(-a,b); // 不处理负数会超时233
 	return b==0?a:gcd(b, a%b);
 }
 
-ll Pollard_rho(ll x, ll c) {
+ll Pollard_rho(ll n, ll c) {
 	ll i=1, k=2;
-	ll x0=rand()%x;
-	ll y = x0;
+	ll x=rand()%n;
+	ll y = x;
 	while(1) {
 		++i;
-		x0=(mod_mult(x0, x0, x)+c)%x;
-		ll d = gcd(y-x0, x);
-		if(d!=1 && d!=x) return d;
-		if(y==x0) return x;
-		if(i==k) {y=x0; k<<=1;}
+		x=(mod_mult(x, x, n)+c)%n; // 伪随机数
+		ll d = gcd(y-x+n, n); // gcd注意负数
+		if(d!=1 && d!=n) return d;
+		if(y==x) return n;
+		if(i==k) {y=x; k<<=1;}
 	}
 }
 
@@ -129,6 +129,11 @@ void solve() {
 		findfac(N);
 		cout << *min_element(factors.begin(), factors.end()) << endl;
 	}
+	// cout << "因子：\n";
+	// for(vector<ll>::iterator i=factors.begin(); i!=factors.end(); ++i) {
+		// printf("%lld ", *i);
+	// }
+	// cout <<endl;
 }
 
 int main()
