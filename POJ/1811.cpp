@@ -51,7 +51,7 @@ ll mod_pow(ll x, ll n, ll mod) {  // a^b%mod
 
 //以a为基,n-1=u*2^t      a^(n-1)=1(mod n)  验证n是不是合数
 //一定是合数返回true,不一定返回false
-bool witness(ll a, ll n, ll u, ll t) {
+bool witness(ll a, ll n, ll u, ll t) { // a随机数，u, t于外部计算
 	ll ret = mod_pow(a, u, n);
 	ll last = ret;
 	for(int i=1; i<=t; ++i) {
@@ -59,7 +59,7 @@ bool witness(ll a, ll n, ll u, ll t) {
 		if(ret == 1 && last != 1 && last != n-1) return true;
 		last = ret;
 	}
-	if(ret!=1) return true;
+	if(ret!=1) return true; // a^(n-1)!=1(mod n)
 	return false;
 }
 
@@ -72,7 +72,7 @@ bool Miller_Rabin(ll n, int s) {
 	if(n < 2 || !(n&1)) return false;
 	ll u=n-1;
 	ll t=0;
-	while(!(u&1)) {u>>=1; ++t;}
+	while(!(u&1)) {u>>=1; ++t;} // 2^t*u = n-1
 	for(int i=0; i<s; ++i) {
 		ll a=rand()%(n-1)+1; // 若n为合数，证据为a的概率至少为1/2
 		if(witness(a, n, u, t)) return false; // 合数
