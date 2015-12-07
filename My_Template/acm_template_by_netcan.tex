@@ -412,6 +412,88 @@ void segment_sieve(ll a, ll b) {
 }
 \end{lstlisting}
 
+\subsection{Miller\_Rabin素数判断$O(log N)$}
+\begin{lstlisting}
+ll mod_mult(ll a, ll b, ll mod) { //return a*b%mod
+	ll s = 0;
+	while(b) {
+		if(b&1) s=(s+a)%mod;
+		a<<=1, b>>=1;
+		if(a > mod) a %= mod;
+	}
+	return s;
+}
+
+ll mod_pow(ll x, ll n, ll mod) {  // a^b%mod
+	ll res = 1;
+	while(n) {
+		if(n&1) res = mod_mult(res, x, mod);
+		x=mod_mult(x, x, mod);
+		n>>=1;
+	}
+	return res;
+}
+//以a为基,n-1=u*2^t      a^(n-1)=1(mod n)  验证n是不是合数
+//一定是合数返回true,不一定返回false
+bool witness(ll a, ll n, ll u, ll t) { // a随机数，u, t于外部计算
+	ll ret = mod_pow(a, u, n);
+	ll last = ret;
+	for(int i=1; i<=t; ++i) {
+		ret = mod_mult(ret, ret, n);
+		if(ret == 1 && last != 1 && last != n-1) return true;
+		last = ret;
+	}
+	if(ret!=1) return true; // a^(n-1)!=1(mod n)
+	return false;
+}
+
+// Miller_Rabin()算法素数判定
+//是素数返回true.(可能是伪素数，但概率极小，P=(1/2)^s)
+//合数返回false;
+// s:挑选s个随机数
+bool Miller_Rabin(ll n, int s) {
+	if(n==2) return true;
+	if(n < 2 || !(n&1)) return false;
+	ll u=n-1;
+	ll t=0;
+	while(!(u&1)) {u>>=1; ++t;} // 2^t*u = n-1
+	for(int i=0; i<s; ++i) {
+		ll a=rand()%(n-1)+1; // 若n为合数，证据为a的概率至少为1/2
+		if(witness(a, n, u, t)) return false; // 合数
+	}
+	return true;
+}
+\end{lstlisting}
+
+\subsection{Pollard\_Rho分解质因数$O(\sqrt[4] N)$}
+\begin{lstlisting}
+vector<ll> factors; // 质因数分解结果（无序）
+ll Pollard_rho(ll n, ll c) { // 伪随机函数f(x)=x^2+c，c为随机数
+	ll i=1, k=2;
+	ll x=rand()%n;
+	ll y = x;
+	while(1) {
+		++i;
+		x=(mod_mult(x, x, n)+c)%n; // 伪随机数
+		ll d = gcd(y-x+n, n); // gcd注意负数
+		if(d!=1 && d!=n) return d;
+		if(y==x) return n; // 遇环退出
+		if(i==k) {y=x; k<<=1;}
+	}
+}
+// 对n进行递归素因子分解
+void findfac(ll n) {
+	if(Miller_Rabin(n, 20)) { // 素数
+		factors.push_back(n); // 储存素因子
+		return;
+	}
+	ll p = n;
+	while(p>=n) p = Pollard_rho(p, rand()%(n-1)+1); // 找出当前合数的一个素因子
+	findfac(p);
+	findfac(n/p);
+}
+\end{lstlisting}
+
 \section{快速幂运算 $O(log n)$}
 \begin{lstlisting}
 typedef long long ll;

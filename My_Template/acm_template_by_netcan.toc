@@ -18,31 +18,33 @@
 \contentsline {section}{\numberline {1.8}素数}{9}{section.1.8}
 \contentsline {subsection}{\numberline {1.8.1}埃式筛法 $O(n log logn)$}{9}{subsection.1.8.1}
 \contentsline {subsection}{\numberline {1.8.2}区间筛法}{9}{subsection.1.8.2}
-\contentsline {section}{\numberline {1.9}快速幂运算 $O(log n)$}{10}{section.1.9}
-\contentsline {chapter}{\numberline {第二章\hspace {0.3em}}计算几何}{11}{chapter.2}
-\contentsline {section}{\numberline {2.1}点}{11}{section.2.1}
-\contentsline {chapter}{\numberline {第三章\hspace {0.3em}}组合博弈}{12}{chapter.3}
-\contentsline {section}{\numberline {3.1}SG函数 \&\& NIM游戏}{12}{section.3.1}
-\contentsline {subsection}{\numberline {3.1.1}打表}{12}{subsection.3.1.1}
-\contentsline {subsection}{\numberline {3.1.2}递归}{12}{subsection.3.1.2}
-\contentsline {chapter}{\numberline {第四章\hspace {0.3em}}数据结构}{14}{chapter.4}
-\contentsline {section}{\numberline {4.1}二叉搜索树}{14}{section.4.1}
-\contentsline {section}{\numberline {4.2}并查集}{15}{section.4.2}
-\contentsline {chapter}{\numberline {第五章\hspace {0.3em}}字符串}{17}{chapter.5}
-\contentsline {section}{\numberline {5.1}KMP算法 $O(M+N)$}{17}{section.5.1}
-\contentsline {section}{\numberline {5.2}字典树}{18}{section.5.2}
-\contentsline {section}{\numberline {5.3}AC自动机}{19}{section.5.3}
-\contentsline {chapter}{\numberline {第六章\hspace {0.3em}}图}{21}{chapter.6}
-\contentsline {section}{\numberline {6.1}邻接表}{21}{section.6.1}
-\contentsline {subsection}{\numberline {6.1.1}样例1}{21}{subsection.6.1.1}
-\contentsline {subsection}{\numberline {6.1.2}样例2}{21}{subsection.6.1.2}
-\contentsline {section}{\numberline {6.2}拓扑排序}{21}{section.6.2}
-\contentsline {section}{\numberline {6.3}单源最短路}{22}{section.6.3}
-\contentsline {subsection}{\numberline {6.3.1}Bellman-Ford算法$O(V*E)$}{22}{subsection.6.3.1}
-\contentsline {subsection}{\numberline {6.3.2}SPFA算法}{22}{subsection.6.3.2}
-\contentsline {subsection}{\numberline {6.3.3}Dijkstra算法}{23}{subsection.6.3.3}
-\contentsline {subsection}{\numberline {6.3.4}差分约束系统}{24}{subsection.6.3.4}
-\contentsline {section}{\numberline {6.4}任意两点间的最短路}{25}{section.6.4}
-\contentsline {section}{\numberline {6.5}最小生成树}{26}{section.6.5}
-\contentsline {subsection}{\numberline {6.5.1}Prim算法 $O(V^2)$}{26}{subsection.6.5.1}
-\contentsline {subsection}{\numberline {6.5.2}Kruskal算法 $O(E log(V))$}{26}{subsection.6.5.2}
+\contentsline {subsection}{\numberline {1.8.3}Miller\_Rabin素数判断$O(log N)$}{10}{subsection.1.8.3}
+\contentsline {subsection}{\numberline {1.8.4}Pollard\_Rho分解质因数$O(\sqrt [4] N)$}{11}{subsection.1.8.4}
+\contentsline {section}{\numberline {1.9}快速幂运算 $O(log n)$}{11}{section.1.9}
+\contentsline {chapter}{\numberline {第二章\hspace {0.3em}}计算几何}{12}{chapter.2}
+\contentsline {section}{\numberline {2.1}点}{12}{section.2.1}
+\contentsline {chapter}{\numberline {第三章\hspace {0.3em}}组合博弈}{13}{chapter.3}
+\contentsline {section}{\numberline {3.1}SG函数 \&\& NIM游戏}{13}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}打表}{13}{subsection.3.1.1}
+\contentsline {subsection}{\numberline {3.1.2}递归}{13}{subsection.3.1.2}
+\contentsline {chapter}{\numberline {第四章\hspace {0.3em}}数据结构}{15}{chapter.4}
+\contentsline {section}{\numberline {4.1}二叉搜索树}{15}{section.4.1}
+\contentsline {section}{\numberline {4.2}并查集}{16}{section.4.2}
+\contentsline {chapter}{\numberline {第五章\hspace {0.3em}}字符串}{18}{chapter.5}
+\contentsline {section}{\numberline {5.1}KMP算法 $O(M+N)$}{18}{section.5.1}
+\contentsline {section}{\numberline {5.2}字典树}{19}{section.5.2}
+\contentsline {section}{\numberline {5.3}AC自动机}{20}{section.5.3}
+\contentsline {chapter}{\numberline {第六章\hspace {0.3em}}图}{22}{chapter.6}
+\contentsline {section}{\numberline {6.1}邻接表}{22}{section.6.1}
+\contentsline {subsection}{\numberline {6.1.1}样例1}{22}{subsection.6.1.1}
+\contentsline {subsection}{\numberline {6.1.2}样例2}{22}{subsection.6.1.2}
+\contentsline {section}{\numberline {6.2}拓扑排序}{22}{section.6.2}
+\contentsline {section}{\numberline {6.3}单源最短路}{23}{section.6.3}
+\contentsline {subsection}{\numberline {6.3.1}Bellman-Ford算法$O(V*E)$}{23}{subsection.6.3.1}
+\contentsline {subsection}{\numberline {6.3.2}SPFA算法}{23}{subsection.6.3.2}
+\contentsline {subsection}{\numberline {6.3.3}Dijkstra算法}{24}{subsection.6.3.3}
+\contentsline {subsection}{\numberline {6.3.4}差分约束系统}{25}{subsection.6.3.4}
+\contentsline {section}{\numberline {6.4}任意两点间的最短路}{26}{section.6.4}
+\contentsline {section}{\numberline {6.5}最小生成树}{27}{section.6.5}
+\contentsline {subsection}{\numberline {6.5.1}Prim算法 $O(V^2)$}{27}{subsection.6.5.1}
+\contentsline {subsection}{\numberline {6.5.2}Kruskal算法 $O(E log(V))$}{27}{subsection.6.5.2}
