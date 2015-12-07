@@ -419,7 +419,7 @@ ll mod_mult(ll a, ll b, ll mod) { //return a*b%mod
 	while(b) {
 		if(b&1) s=(s+a)%mod;
 		a<<=1, b>>=1;
-		if(a > mod) a %= mod;
+		if(a > mod) a -= mod;
 	}
 	return s;
 }
