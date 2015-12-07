@@ -89,7 +89,7 @@ inline ll gcd(ll a, ll b) {
 	return b==0?a:gcd(b, a%b);
 }
 
-ll Pollard_rho(ll n, ll c) {
+ll Pollard_rho(ll n, ll c) { // 伪随机函数f(x)=x^2+c，c为随机数
 	ll i=1, k=2;
 	ll x=rand()%n;
 	ll y = x;
@@ -98,19 +98,19 @@ ll Pollard_rho(ll n, ll c) {
 		x=(mod_mult(x, x, n)+c)%n; // 伪随机数
 		ll d = gcd(y-x+n, n); // gcd注意负数
 		if(d!=1 && d!=n) return d;
-		if(y==x) return n;
+		if(y==x) return n; // 遇环退出
 		if(i==k) {y=x; k<<=1;}
 	}
 }
 
-// 对n进行素因子分解
+// 对n进行递归素因子分解
 void findfac(ll n) {
 	if(Miller_Rabin(n, 20)) { // 素数
-		factors.push_back(n);
+		factors.push_back(n); // 储存素因子
 		return;
 	}
 	ll p = n;
-	while(p>=n) p = Pollard_rho(p, rand()%(n-1)+1);
+	while(p>=n) p = Pollard_rho(p, rand()%(n-1)+1); // 找出当前合数的一个素因子
 	findfac(p);
 	findfac(n/p);
 }
