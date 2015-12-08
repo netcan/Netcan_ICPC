@@ -468,6 +468,7 @@ bool Miller_Rabin(ll n, int s) {
 \subsection{Pollard\_Rho分解质因数$O(\sqrt[4] N)$}
 \begin{lstlisting}
 vector<ll> factors; // 质因数分解结果（无序）
+// map<ll, int> factors; // 分解质因数结果（无序，存储每个质因数的n次方）
 ll Pollard_rho(ll n, ll c) { // 伪随机函数f(x)=x^2+c，c为随机数
 	ll i=1, k=2;
 	ll x=rand()%n;
@@ -485,6 +486,7 @@ ll Pollard_rho(ll n, ll c) { // 伪随机函数f(x)=x^2+c，c为随机数
 void findfac(ll n) {
 	if(Miller_Rabin(n, 20)) { // 素数
 		factors.push_back(n); // 储存素因子
+		// ++factors[n]; // 用map存储后面方便合并
 		return;
 	}
 	ll p = n;
