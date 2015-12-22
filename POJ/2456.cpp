@@ -30,7 +30,6 @@ using namespace std;
 
 int N, C; // 牛的总数N，会攻击其他牛的数量C
 int x[100004];
-
 bool c(int d) {
 	int last = 0;
 	for(int i=1; i<C; ++i) {
