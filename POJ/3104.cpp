@@ -31,6 +31,7 @@ typedef long long ll;
 
 int n;
 int a[100000+5], k;
+
 bool C(ll x) { // <=x分钟能否烘干所有衣服
 	ll minute = 0; // 烘干机最少烘干的时间
 	for(int i=1; i<=n; ++i) {
