@@ -43,7 +43,7 @@ struct Remian{
 bool C(double x) {
 	for(int i=0; i<n; ++i) {
 		remain[i].c = v[i] - w[i]*x;
-		remain[i].id = i+1; // 宝珠编号
+		remain[i].id = i+1; // 记录宝珠编号
 	}
 	sort(remain, remain+n);
 	double sum = 0.0;
