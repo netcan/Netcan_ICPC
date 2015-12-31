@@ -25,15 +25,14 @@ vector<grave> graves;
 void solve() {
 	int s, t;
 	ll sum = 0;
-	ll sq = 0;
 	s = t = 0;
-	graves.clear();
+	graves.clear(); // 注意清零。。
 	for(;;) {
-		while(ll(t)*t <= N && sum < N) {
+		while(ll(t)*t <= N && sum < N) { // 注意t范围
 			++t;
 			sum += ll(t)*t;
 		}
-		if(sum < N || sq > N) break;
+		if(sum < N) break;
 
 		if(sum == N) graves.push_back(grave(s, t));
 		++s;
