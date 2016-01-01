@@ -23,7 +23,7 @@ int calc(int K) {
 			++res;
 			f[i] = true;
 		}
-		sum += f[i];
+		sum += f[i]; // 计算下一个sum
 		if(i-K+1>=0) sum-=f[i-K+1];
 	}
 	for(int i=N-K+1; i<N; ++i) {
