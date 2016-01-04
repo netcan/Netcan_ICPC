@@ -19,8 +19,8 @@ struct inhabit {
 	char name[255];
 } inhabits[32000+5];
 
-float maxL;
-int maxI;
+float maxL; // 最大距离
+int maxI; // 最后一个掉落的居民
 
 
 void solve() {
@@ -32,7 +32,7 @@ void solve() {
 		for(int i=maxI-1; i>=0; --i) if(inhabits[i].pos > 0) --cnt;
 	}
 
-	printf("%13.2f %s\n", int(maxL/V*100.0)/100.0, inhabits[maxI+cnt].name);
+	printf("%13.2f %s\n", int(maxL/V*100.0)/100.0, inhabits[maxI+cnt].name); // 注意13是总长度而不是小数部分长度。
 }
 
 int main() {
@@ -48,7 +48,7 @@ int main() {
 		for(int i=0; i<N; ++i) {
 			getchar();
 			scanf("%c%f%s", &p, &inhabits[i].pos, inhabits[i].name);
-			if(p=='n' || p=='N') {
+			if(p=='n' || p=='N') { // 这里没看到会有‘N'。。
 				l = inhabits[i].pos;
 				inhabits[i].pos = -inhabits[i].pos;
 			}
