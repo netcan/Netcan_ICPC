@@ -27,7 +27,7 @@ void solve() {
 	for (int i = 0; i < N; ++i)
 		for (int j = 0; j < N; ++j) {
 			int s = C[i] + D[j];
-			res += upper_bound(sum, sum+N*N, -s) - lower_bound(sum, sum+N*N, -s);
+			res += upper_bound(sum, sum+N*N, -s) - lower_bound(sum, sum+N*N, -s); // 累加相同数字个数。
 		}
 	cout << res << endl;
 }
