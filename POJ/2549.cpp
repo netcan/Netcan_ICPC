@@ -18,7 +18,6 @@ int data[1024];
 void solve() {
 	sort(data, data+N);
 	int n = unique(data, data+N) - data; // 去重
-	int ans = 0;
 	for(int d=n-1; d>=0; --d) { // d从大到小枚举
 		for(int i=0; i<n-3; ++i) { // 开始枚举
 			int s = i + 1;
@@ -37,7 +36,6 @@ void solve() {
 			}
 		}
 	}
-
 	puts("no solution");
 }
 
