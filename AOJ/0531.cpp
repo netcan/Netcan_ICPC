@@ -17,7 +17,7 @@ using namespace std;
 int w, h, n;
 int x1[1005], x2[1005];
 int y1[1005], y2[1005];
-bool fld[1003*6][1003*6];
+bool fld[1003*6][1003*6]; // 保存离散化后的区域，1表示有挡板，0表示可涂色
 int dx[] = {1, 0, -1, 0};
 int dy[] = {0, 1, 0, -1};
 typedef pair<int, int> P;
@@ -33,17 +33,17 @@ int compress(int *x1, int *x2, int w) {
 			if(0<=tx2 && tx2 <w) xs.push_back(tx2);
 		}
 	}
-	sort(xs.begin(), xs.end());
-	xs.erase(unique(xs.begin(), xs.end()), xs.end());
+	sort(xs.begin(), xs.end()); // 排序
+	xs.erase(unique(xs.begin(), xs.end()), xs.end()); // 去重
 
 	for(int i=0; i<n; ++i) {
-		x1[i] = find(xs.begin(), xs.end(), x1[i]) - xs.begin();
+		x1[i] = find(xs.begin(), xs.end(), x1[i]) - xs.begin(); // 将坐标映射到0~n
 		x2[i] = find(xs.begin(), xs.end(), x2[i]) - xs.begin();
 	}
-	return xs.size();
+	return xs.size(); // 返回离散后的宽度
 }
 
-void bfs(int x, int y) {
+void bfs(int x, int y) { // 宽度优先搜索
 	queue<P> que;
 	que.push(P(x, y));
 	while(!que.empty()) {
@@ -60,16 +60,33 @@ void bfs(int x, int y) {
 	}
 }
 
+void debug() {
+	memset(fld, 0, sizeof(fld));
+	for(int i=0; i<n; ++i) {
+		for(int y=y1[i]; y<=y2[i]; ++y)
+			for(int x=x1[i]; x<=x2[i]; ++x)
+				fld[y][x] = true;
+	}
+	printf("w:%d h:%d n:%d\n", w, h, n);
+	for(int y=0; y<h; ++y) {
+		for(int x=0; x<w; ++x)
+			printf("%c", fld[y][x]?'1':'0');
+		printf("\n");
+	}
+}
+
 void solve() {
-	w = compress(x1, x2, w);
-	h = compress(y1, y2, h);
+	// debug();
+	w = compress(x1, x2, w); // 离散化
+	h = compress(y1, y2, h); // 离散化
+	// debug();
+
 
 	memset(fld, 0, sizeof(fld));
 	for(int i=0; i<n; ++i)
 		for(int y=y1[i]; y<=y2[i]; ++y)
 			for(int x=x1[i]; x<=x2[i]; ++x)
 				fld[y][x] = true;
-	// printf("w:%d h:%d n:%d\n", w, h, n);
 	int ans = 0;
 	for(int y=0; y<h; ++y) {
 		for(int x=0; x<w; ++x) {
@@ -79,12 +96,6 @@ void solve() {
 		}
 	}
 	cout << ans <<endl;
-
-	// for(int y=0; y<h; ++y) {
-		// for(int x=0; x<w; ++x)
-			// printf("%c", fld[y][x]?'1':'0');
-		// printf("\n");
-	// }
 }
 
 
