@@ -65,8 +65,8 @@ int query(int v, int l, int r, int s, int e) { // 求第[s, e)的和，[l, r)
 	int chl = (v<<1)+1, chr = (v<<1)+2, m = (l + r) >> 1;
 	// printf("l: %d m:%d r: %d v:%d s:%d e: %d\n", l, m, r, v, s, e);
 	int ans = 0;
-	if(m >= s) ans += query(chl, l, m, s, e);
-	if(m < e) ans += query(chr, m, r, s, e);
+	if(m >= s) ans += query(chl, l, m, s, e); // m的前半部分到s是需要的
+	if(m < e) ans += query(chr, m, r, s, e); // m的后半部分到e是需要的
 	return ans;
 }
 
