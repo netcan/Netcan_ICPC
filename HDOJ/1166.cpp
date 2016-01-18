@@ -32,7 +32,7 @@ int T, N;
 int data[MAXN];
 int tree[MAXN<<1];
 
-void build(int v, int l, int r) { // [l, r)
+void build(int v, int l, int r) { // [l, r)，建树
 	if(r - l == 1) {
 		// printf("l: %d r: %d v:%d\n", l, r, v);
 		tree[v] = data[l];
@@ -45,7 +45,7 @@ void build(int v, int l, int r) { // [l, r)
 	}
 }
 
-void update(int v, int l, int r, int k, int a) { // 第k个数据增加a
+void update(int v, int l, int r, int k, int a) { // 第k个数据增加a，[l, r)
 	if(k<l || k>=r) return;
 
 	if(r-l == 1) { // 叶子节点
@@ -59,7 +59,7 @@ void update(int v, int l, int r, int k, int a) { // 第k个数据增加a
 	}
 }
 
-int query(int v, int l, int r, int s, int e) { // 求第[s, e)的和
+int query(int v, int l, int r, int s, int e) { // 求第[s, e)的和，[l, r)
 	if(l>=e || r<=s) return 0;
 	if(l >= s && r <= e) return tree[v];
 	int chl = (v<<1)+1, chr = (v<<1)+2, m = (l + r) >> 1;
