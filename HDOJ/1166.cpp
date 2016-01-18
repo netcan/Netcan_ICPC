@@ -53,8 +53,8 @@ void update(int v, int l, int r, int k, int a) { // 第k个数据增加a，[l, r
 	}
 	else {
 		int chl = (v<<1)+1, chr = (v<<1)+2, m = (l + r) >> 1;
-		if(k<m) update(chl, l, m, k, a);
-		else update(chr, m, r, k, a);
+		if(k<m) update(chl, l, m, k, a); // k在左半部分
+		else update(chr, m, r, k, a); // 否则就是右半部分
 		tree[v] = tree[chl] + tree[chr];
 	}
 }
