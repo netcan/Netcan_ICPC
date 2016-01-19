@@ -689,6 +689,46 @@ bool same(int x,int y) { // 判断两个元素是否同集合
 	return find(x) == find(y);
 }
 \end{lstlisting}
+\section{线段树}
+线段树擅长处理区间问题，每个节点都维护一个区间。根维护的是整个区间，每个节点维护的是父亲的区间二等分后的其中的一个子区间。时间复杂度$O(log N)$。
+\begin{lstlisting}
+// 以下是0-indexed线段树，左闭右开区间[l, r)
+int tree[MAXN << 1];
+void build(int v, int l, int r) { // 建树，v为当前树节点
+	if(r - l == 1) { // 根节点
+		// tree[v] = // ...
+		return;
+	}
+	int chl = (v<<1)+1, chr = (v<<1)+2, m = (l+r) >> 1; // 左儿子右儿子，等分区间
+	build(chl, l, m); // 遍历左子树
+	build(chr, m, r); // 遍历右子树
+	// tree[v] = // ... 后序操作
+}
+
+void update(int v, int l, int r, int k, int a) { // 更新，将k节点的数值更新为a
+	if(r - l == 1) {
+		tree[v] = a; // 根节点
+	}
+	else {
+		int chl = (v<<1)+1, chr = (v<<1)+2, m = (l+r) >> 1; // 左儿子右儿子，等分区间
+		if(k < m) update(chl, l, m, k, a); // 左半部分
+		else update(chr, m, r, k, a); // 右半部分
+		// tree[v] = // ... 后序操作
+	}
+}
+
+int query(int v, int l, int r, int L, int R) { // 查询区间[L, R)操作
+	if(L>=r || R<=l) return // ...区间无交集返回不存在
+	if(l>=L && r<=R) return tree[v]; // [l, r)包含于区间[L, R)
+	int chl = (v<<1)+1, chr = (v<<1)+2, m = (l+r) >> 1; // 左儿子右儿子，等分区间
+	int res = // ... 初始化
+	if(m>=L) res= // 左半部分操作
+	if(m<=R) res= // 右半部分操作
+	return res;
+}
+
+\end{lstlisting}
+
 
 
 \chapter{字符串}
