@@ -56,7 +56,7 @@ language=c++,
 \textsc{\large 合肥工业大学宣城校区}\\[1cm]
 \includegraphics[width=3cm, height=3cm]{hfut_logo.jpg}\\[0.5cm]
 Author: \textbf{\emph{Netcan}}\\
-Blog: \textbf{\emph{\url{http://www.netcan.xyz}}}\\
+Blog: \textbf{\emph{\url{http://www.netcan666.com}}}\\
 {\large \today}\\[2cm]
 \end{center}
 \end{titlepage}
@@ -729,6 +729,27 @@ int query(int v, int l, int r, int L, int R) { // 查询区间[L, R)操作
 
 \end{lstlisting}
 
+\section{树状数组}
+树状数组可以高效地求出连续一段元素之和或者更新单个元素的值。
+\begin{lstlisting}
+// [1, n]
+int bit[MAX_N+1], N;
+
+int sum(int i) {
+	int s = 0;
+	while(i > 0) {
+		s+=bit[i];
+		i-=i&-i;
+	}
+	return s;
+}
+void add(int i, int x) {
+	while(i <= N) {
+		bit[i] += x;
+		i+=i&-i;
+	}
+}
+\end{lstlisting}
 
 
 \chapter{字符串}

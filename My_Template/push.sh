@@ -17,5 +17,5 @@ git add acm_template_by_netcan.toc
 git add hfut_logo.jpg
 git add sodc.png
 git add push.sh
-git commit -m "增加线段树部分。"
+git commit -m "增加树状数组部分。"
 git push -u origin master
