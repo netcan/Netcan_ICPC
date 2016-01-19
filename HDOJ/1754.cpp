@@ -47,7 +47,7 @@ int query(int v, int l, int r, int L, int R) { // 查询[L, R)上的最大值
 	int chl = (v<<1)+1, chr = (v<<1)+2, m = (l+r) >> 1;
 	int res = numeric_limits<int>::min();
 	if(m>=L) res=max(res, query(chl, l, m, L, R)); // 左半部分还有
-	if(m<=R) res=max(res, query(chr, m, r, L, R)); // 有半部分也有
+	if(m<=R) res=max(res, query(chr, m, r, L, R)); // 右半部分也有
 	return res;
 }
 
