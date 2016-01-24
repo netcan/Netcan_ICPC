@@ -8,6 +8,6 @@
 #!/bin/bash
 
 git add push.sh
-git add "3468_3.cpp"
+git add "1990.cpp"
 git commit -m "树状数组"
 git push -u origin master
