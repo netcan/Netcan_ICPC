@@ -17,7 +17,7 @@ typedef long long ll;
 
 int N;
 int x[MAXN], y[MAXN];
-bool visited[MAXN];
+bool visited[MAXN]; // 标记x坐标是否访问过，访问过的话再次访问说明同x坐标。
 
 ll bit0[MAXN], bit1[MAXN]; // 负责维护原始值和增量的树状数组，用来记录区间内黑点数量。
 
@@ -38,7 +38,7 @@ ll sum(ll *bit, int i) {
 	return res;
 }
 
-// 区间和，更新区间值[l, r)
+// 区间和，更新区间值[l, r]
 ll getsum(int i) {
 	return sum(bit0, i) + sum(bit1, i)*i;
 }
@@ -79,8 +79,7 @@ void solve() {
 			if(visited[X]) ans += s; // 前面已经标记过x轴的话
 			visited[X] = true;
 			update(X, X, -s);
-			if(i+1 < xs.end() && X+1 <= (*(i+1)-1))
-				update(X+1, *(i+1)-1, 1);
+			if(i+1 < xs.end() && X+1 <= (*(i+1)-1)) update(X+1, *(i+1)-1, 1); // 标记两个相邻黑点间的黑点数
 		}
 	}
 	printf("%lld\n", ans);
