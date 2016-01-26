@@ -78,7 +78,7 @@ void solve() {
 			ll s = getsum(X) - getsum(X-1); // 当前坐标的黑点数
 			if(visited[X]) ans += s; // 前面已经标记过x轴的话
 			visited[X] = true;
-			update(X, X, -s);
+			update(X, X, -s); // 归零
 			if(i+1 < xs.end() && X+1 <= (*(i+1)-1)) update(X+1, *(i+1)-1, 1); // 标记两个相邻黑点间的黑点数
 		}
 	}
