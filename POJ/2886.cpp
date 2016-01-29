@@ -30,7 +30,7 @@ void init_factors() { // 预处理因子数
 			for(int j=i; j<MAXN; j+=i) {
 				int k = 0;
 				for(int m=j; m % i == 0; m/=i, ++k);
-				factors[j] *= k+1;
+				factors[j] *= k+1; // 加上1
 			}
 }
 
