@@ -26,14 +26,14 @@ void build(int k, int l, int r) {
 		build(chl, l, m);
 		build(chr, m, r);
 		tree[k].resize(r - l);
-		merge(tree[chl].begin(), tree[chl].end(), tree[chr].begin(), tree[chr].end(), tree[k].begin()); // STL::merge()大法好，归并函数
+		merge(tree[chl].begin(), tree[chl].end(), tree[chr].begin(), tree[chr].end(), tree[k].begin()); // std::merge()大法好，归并函数
 	}
 }
 
 int query(int k, int l, int r, int L, int R, int x) { // 查询[L, R)上<=x的个数
 	if(R<=l || L>=r) return 0; // 无交集
 	else if(L<=l && R>=r) // 完全包含
-		return upper_bound(tree[k].begin(), tree[k].end(), x) - tree[k].begin();
+		return upper_bound(tree[k].begin(), tree[k].end(), x) - tree[k].begin(); // 二分搜索出<=x的数量
 	else {
 		int chl = (k<<1) + 1, chr = (k<<1) + 2, m = (l+r) >> 1;
 		return query(chl, l, m, L, R, x) + query(chr, m, r, L, R, x);
