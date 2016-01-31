@@ -31,7 +31,8 @@ void build(int v, int l, int r) { // [l, r)
 
 int query(int v, int l, int r, int L, int R) { // [l, r)
 	// printf("l:%d r:%d L:%d R:%d\n", l, r, L, R);
-	if(L >= r || R <= l) return 0;
+	if(L==R) return 1;
+	else if(L >= r || R <= l) return 0;
 	else if(L<=l && r <= R)
 		return tree[v];
 	else {
@@ -48,21 +49,14 @@ void solve() {
 		int lp = lower_bound(pos.begin(), pos.end(), l) - pos.begin();
 		int rp = lower_bound(pos.begin(), pos.end(), r) - pos.begin();
 		// printf("pos[%d] = %d pos[%d]=%d\n", lp, pos[lp], rp, pos[rp]);
-		if(pos[lp] == l && pos[rp] == r) {
-			if(lp == rp) printf("%d\n", r - l);
-			else printf("%d\n", query(0, 0, pos.size()-1, lp, rp));
-		}
-		else if(pos[lp] == l && pos[rp] != r) {
-			if(lp + 1 == rp) printf("%d\n", r - l);
-			else printf("%d\n", max(query(0, 0, pos.size()-1, lp, rp-1), r-pos[rp-1]));
-		}
-		else if(pos[lp] != l && pos[rp] == r) {
-			if(lp == rp) printf("%d\n", pos[lp] - l);
-			else printf("%d\n", max(query(0, 0, pos.size()-1, lp, rp), pos[lp] - l));
-		}
+		if(pos[lp] == l && pos[rp] == r)
+			printf("%d\n", query(0, 0, pos.size()-1, lp, rp));
+		else if(pos[lp] == l && pos[rp] != r)
+			printf("%d\n", max(query(0, 0, pos.size()-1, lp, rp-1), r-pos[rp-1]));
+		else if(pos[lp] != l && pos[rp] == r)
+			printf("%d\n", max(query(0, 0, pos.size()-1, lp, rp), pos[lp] - l));
 		else {
 			if(lp == rp) printf("%d\n", r - l);
-			else if(lp + 1 == rp) printf("%d\n", max(pos[lp]-l, r-pos[rp-1]));
 			else printf("%d\n", max(r-pos[rp-1], max(query(0, 0, pos.size()-1, lp, rp-1), pos[lp] - l)));
 		}
 	}
