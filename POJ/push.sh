@@ -8,6 +8,6 @@
 #!/bin/bash
 
 git add push.sh
-git add "2104.cpp"
-git commit -m "平方分割, 二分搜索"
+git add "2104_2.cpp"
+git commit -m "线段树"
 git push -u origin master
