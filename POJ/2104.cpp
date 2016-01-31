@@ -13,7 +13,7 @@
 #include <algorithm>
 using namespace std;
 const int MAXN = 100000 + 5;
-const int B = 1000;
+const int B = 1200;
 int N, M;
 int A[MAXN]; // 数据
 vector<int> bucket[MAXN/B]; // 桶
