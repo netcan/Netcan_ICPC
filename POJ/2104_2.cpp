@@ -46,6 +46,7 @@ void solve() {
 	for (int i = 0; i < M; ++i) {
 		int l, r, k;
 		scanf("%d%d%d", &l, &r, &k);
+		// 二分
 		int lb = -1, ub = N-1; // (lb, ub]
 		while(ub - lb > 1) {
 			int mid = (lb + ub) >> 1;
